@@ -1,4 +1,6 @@
 ﻿using API.Data;
+using API.Helpers;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +25,8 @@ namespace API.Extensions
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
+            // Adding our auto mapper profiles as a service so can later use them through dependency injection.
+            services.AddAutoMapper(typeof(AutoMapperOrganizationProfile));
             return services;
         }
     }
