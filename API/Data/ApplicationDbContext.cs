@@ -5,6 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
+    /// <summary>
+    /// Application context representing the database for our application.
+    /// Stores the tables and their properties/relations. Using an IdentityDbContext
+    /// so the database can be provided with all the additional features that come with
+    /// identity e.g automatically normalized names and secure password salt/hashing.
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, IdentityUserClaim<int>,
         ApplicationUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {

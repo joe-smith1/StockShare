@@ -8,6 +8,11 @@ using Microsoft.OpenApi.Models;
 
 namespace API
 {
+    /// <summary>
+    /// Provides the customization and adding of services for later scoped use of dependency injection
+    /// to other parts of our application. Also adds the configuration of the HTTP pipeline for requests to
+    /// the api.
+    /// </summary>
     public class Startup
     {
         private readonly IConfiguration _configuration;
@@ -37,6 +42,7 @@ namespace API
 
             services.AddCors(options =>
             {
+                // Open cors named policy for our development client, when it comes to production the client will be served on same server.
                 options.AddPolicy(_AllowedOrigins, builder =>
                 {
                     builder.AllowAnyHeader();
