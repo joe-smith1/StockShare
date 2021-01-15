@@ -12,6 +12,7 @@ namespace API.Data.Entities
     /// </summary>
     public class ApplicationUser : IdentityUser<int>
     {
+
         public DateTime SignUpDate { get; set; } = DateTime.UtcNow;
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         public uint Points { get; set; }
@@ -41,6 +42,6 @@ namespace API.Data.Entities
 
         // Navigational entity relationships.
         // Many to many with ApplicationRoles through ApplicationUserRoles.
-        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
     }
 }
