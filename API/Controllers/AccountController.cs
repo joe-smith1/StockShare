@@ -53,6 +53,12 @@ namespace API.Controllers
         {
             // Mapping registerDto properties to a new ApplicationUser then creating this new user in our database through identity.
             var userToRegister = _mapper.Map<ApplicationUser>(registerDto);
+
+            if (userToRegister == null)
+            {
+                return BadRequest("Failed to create user from provided details.");
+            }
+
             var userCreationResult = await _userManager.CreateAsync(userToRegister, registerDto.Password);
 
             if (!userCreationResult.Succeeded)
@@ -74,5 +80,39 @@ namespace API.Controllers
             // TODO add route of getting user (once this action and controller is created).
             return CreatedAtRoute("", loggedInUser);
         }
+
+        /// <summary>
+        /// Action to login a user with the provided username and password. The sign in manager through identity is then
+        /// used to try to verify the password with the user found with the provided username in the database.
+        /// </summary>
+        /// <param name="loginDto">LoginDto that receives the validated properties sent up in the POST request</param>
+        /// <returns>AuthenticatedUserDto with the created JSON token if login is valid
+        /// otherwise Unauthorized response.</returns>
+        [Route("login")]
+        [HttpPost]
+        public async Task<ActionResult<AuthenticatedUserDto>> Login(LoginDto loginDto)
+        {
+            const string unauthorizedResponse = "Invalid username or password!";
+
+            var userToSignIn = await
+                _userManager.Users.SingleOrDefaultAsync(u => u.UserName == loginDto.UserName);
+
+            if (userToSignIn == null)
+            {
+                return Unauthorized(unauthorizedResponse);
+            }
+
+            var loginResult = await _signInManager.PasswordSignInAsync(userToSignIn, loginDto.Password, false, false);
+
+            if (loginResult.Succeeded)
+            {
+                var loggedInUser = _mapper.Map<AuthenticatedUserDto>(userToSignIn);
+                // TODO add token to the AuthenticatedUserDto.
+                return Ok(loggedInUser);
+            }
+
+            return Unauthorized(unauthorizedResponse);
+        }
+
     }
 }

@@ -12,7 +12,6 @@ namespace API.Data.Entities
     /// </summary>
     public class ApplicationUser : IdentityUser<int>
     {
-
         public DateTime SignUpDate { get; set; } = DateTime.UtcNow;
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         public uint Points { get; set; }

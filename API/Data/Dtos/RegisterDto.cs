@@ -13,7 +13,6 @@ namespace API.Data.Dtos
         public string UserName { get; set; }
 
         [Required]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
@@ -24,9 +23,7 @@ namespace API.Data.Dtos
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
-
         public bool PrivateAccount { get; set; }
     }
 }
