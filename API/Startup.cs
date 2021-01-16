@@ -32,7 +32,7 @@ namespace API
         {
             // Extension methods for cleaner custom service setup.
             services.AddCustomServices(_configuration);
-            services.AddIdentityServices();
+            services.AddIdentityServices(_configuration);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -70,6 +70,7 @@ namespace API
 
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

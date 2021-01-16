@@ -1,5 +1,7 @@
 ﻿using API.Data;
 using API.Helpers;
+using API.Interfaces;
+using API.Services;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,10 @@ namespace API.Extensions
 
             // Adding our auto mapper profiles as a service so can later use them through dependency injection.
             services.AddAutoMapper(typeof(AutoMapperOrganizationProfile));
+
+            // Scoped service of the JwtTokenService as it is only required for certain http requests not the whole
+            // application lifetime.
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
             return services;
         }
     }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Text;
 using API.Data;
 using API.Data.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.Extensions
 {
@@ -18,7 +22,7 @@ namespace API.Extensions
         /// </summary>
         /// <param name="services">Service collection to add the identity services too.</param>
         /// <returns><paramref name="services"/> with the added identity services.</returns>
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
@@ -34,7 +38,36 @@ namespace API.Extensions
                 .AddRoleValidator<RoleValidator<ApplicationRole>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // TODO JWT services Authentication setup.
+            // TODO LOOK INTO MORE ADVANCED AUTHENTICATION e.g with OPEN ID CONNECT using AZURE AD.
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    //options.Authority = "";
+                    //options.Audience = "";
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //ClockSkew = TimeSpan.FromMinutes(5),
+
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtTokenKey"])),
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+
+
+                        //RequireSignedTokens = true,
+
+                        //RequireExpirationTime = true,
+                        //ValidateLifetime = true,
+
+                        //ValidateAudience = true,
+                        //ValidAudience = "",
+
+                        //ValidateIssuer = true,
+                        //ValidIssuer = ""
+
+                    };
+                });
             return services;
         }
     }

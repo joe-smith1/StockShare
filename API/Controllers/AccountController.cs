@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Data.Dtos;
 using API.Data.Entities;
+using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace API.Controllers
     public class AccountController : ApiBaseController
     {
         private readonly IMapper _mapper;
+        private readonly IJwtTokenService _jwtTokenService;
 
         /// <summary>
         /// Manager used with identity for creating users, deleting them and checking if they exist.
@@ -31,11 +33,12 @@ namespace API.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, IMapper mapper)
+            SignInManager<ApplicationUser> signInManager, IMapper mapper, IJwtTokenService jwtTokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _jwtTokenService = jwtTokenService;
         }
 
         /// <summary>
@@ -74,8 +77,7 @@ namespace API.Controllers
             }
 
             // Mapping to a AuthenticatedUserDto so we only send back the required properties.
-            var loggedInUser = _mapper.Map<AuthenticatedUserDto>(userToRegister);
-            // TODO add generated token for returned AuthenticatedUserDto
+            var loggedInUser = MapUserAndAddTokenAsync(userToRegister);
 
             // TODO add route of getting user (once this action and controller is created).
             return CreatedAtRoute("", loggedInUser);
@@ -106,12 +108,25 @@ namespace API.Controllers
 
             if (loginResult.Succeeded)
             {
-                var loggedInUser = _mapper.Map<AuthenticatedUserDto>(userToSignIn);
-                // TODO add token to the AuthenticatedUserDto.
+                var loggedInUser = await MapUserAndAddTokenAsync(userToSignIn);
                 return Ok(loggedInUser);
             }
 
             return Unauthorized(unauthorizedResponse);
+        }
+
+        /// <summary>
+        /// Uses auto mapper to map the provided ApplicationUser to an AuthenticatedUserDto and adds a
+        /// generated Jwt token for the given User onto the Dto which can then be used for authenticating
+        /// other requests.
+        /// </summary>
+        /// <param name="user">The user to that's been authenticated and ready to be returned.</param>
+        /// <returns>The Mapped user with the generated Jwt token.</returns>
+        private async Task<AuthenticatedUserDto> MapUserAndAddTokenAsync(ApplicationUser user)
+        {
+            var loggedInUser = _mapper.Map<AuthenticatedUserDto>(user);
+            loggedInUser.Token = await _jwtTokenService.CreateTokenAsync(user);
+            return loggedInUser;
         }
 
     }
