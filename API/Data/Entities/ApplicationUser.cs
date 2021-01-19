@@ -18,7 +18,6 @@ namespace API.Data.Entities
         public bool PrivateAccount { get; set; }
 
         // Nullable properties.
-        public string? FavoriteStock { get; set; }
         public string? ProfileDescription { get; set; }
 
         /// <summary>
@@ -40,7 +39,20 @@ namespace API.Data.Entities
         public string? FavoriteMarket { get; set; }
 
         // Navigational entity relationships.
-        // Many to many with ApplicationRoles through ApplicationUserRoles.
+
+        /// <summary>
+        /// Many to many with ApplicationRoles through ApplicationUserRoles.
+        /// </summary>
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
+
+        /// <summary>
+        ///  One to many relationship aka many stocks can be owned by one user.
+        /// </summary>
+        public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();
+
+        /// <summary>
+        /// Foreign Key to the favorite Stock of the user.
+        /// </summary>
+        public virtual Stock? FavoriteStock { get; set; }
     }
 }

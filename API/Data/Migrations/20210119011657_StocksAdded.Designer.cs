@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210119011657_StocksAdded")]
+    partial class StocksAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,8 +71,8 @@ namespace DataMigrations
                     b.Property<string>("FavoriteMarket")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("FavoriteStockId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("FavoriteStock")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("InvestmentOrientation")
                         .HasColumnType("TEXT");
@@ -131,8 +133,6 @@ namespace DataMigrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FavoriteStockId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -164,16 +164,16 @@ namespace DataMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ApplicationRoleId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("CurrentValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal?>("DailyGainLoss")
+                    b.Property<decimal>("DailyGainLoss")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ExchangeMarket")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal?>("MonthlyGainLoss")
+                    b.Property<decimal>("MonthlyGainLoss")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("PurchaseDate")
@@ -191,13 +191,15 @@ namespace DataMigrations
                     b.Property<decimal>("ValueAtPurchase")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal?>("WeeklyGainLoss")
+                    b.Property<decimal>("WeeklyGainLoss")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal?>("YearlyGainLoss")
+                    b.Property<decimal>("YearlyGainLoss")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationRoleId");
 
                     b.HasIndex("UserId");
 
@@ -288,15 +290,6 @@ namespace DataMigrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("API.Data.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("API.Data.Entities.Stock", "FavoriteStock")
-                        .WithMany()
-                        .HasForeignKey("FavoriteStockId");
-
-                    b.Navigation("FavoriteStock");
-                });
-
             modelBuilder.Entity("API.Data.Entities.ApplicationUserRole", b =>
                 {
                     b.HasOne("API.Data.Entities.ApplicationRole", "Role")
@@ -318,8 +311,12 @@ namespace DataMigrations
 
             modelBuilder.Entity("API.Data.Entities.Stock", b =>
                 {
-                    b.HasOne("API.Data.Entities.ApplicationUser", "User")
+                    b.HasOne("API.Data.Entities.ApplicationRole", null)
                         .WithMany("Stocks")
+                        .HasForeignKey("ApplicationRoleId");
+
+                    b.HasOne("API.Data.Entities.ApplicationUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -363,13 +360,13 @@ namespace DataMigrations
 
             modelBuilder.Entity("API.Data.Entities.ApplicationRole", b =>
                 {
+                    b.Navigation("Stocks");
+
                     b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("API.Data.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Stocks");
-
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

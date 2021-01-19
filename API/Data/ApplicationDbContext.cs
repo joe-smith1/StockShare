@@ -29,6 +29,11 @@ namespace API.Data
                     .WithOne(ur => ur.User)
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
+
+                // Each User can have many Stocks.
+                b.HasMany<Stock>(u => u.Stocks)
+                    .WithOne(s => s.User)
+                    .IsRequired(false);
             });
 
             builder.Entity<ApplicationRole>(b =>
