@@ -33,7 +33,7 @@ namespace API.Data
                 // Each User can have many Stocks.
                 b.HasMany<Stock>(u => u.Stocks)
                     .WithOne(s => s.User)
-                    .IsRequired(false);
+                    .IsRequired();
             });
 
             builder.Entity<ApplicationRole>(b =>
@@ -42,6 +42,12 @@ namespace API.Data
                 b.HasMany<ApplicationUserRole>(r => r.UserRoles)
                     .WithOne(ur => ur.Role)
                     .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+            });
+
+            builder.Entity<Stock>(b =>
+            {
+                b.Property(s => s.Ticker)
                     .IsRequired();
             });
         }

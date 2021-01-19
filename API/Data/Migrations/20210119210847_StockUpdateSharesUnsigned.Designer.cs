@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210119210847_StockUpdateSharesUnsigned")]
+    partial class StockUpdateSharesUnsigned
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +112,7 @@ namespace DataMigrations
                     b.Property<string>("ProfileDescription")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("ProfitLoss")
+                    b.Property<decimal?>("ProfitLoss")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
@@ -119,7 +121,7 @@ namespace DataMigrations
                     b.Property<DateTime>("SignUpDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("TotalInvested")
+                    b.Property<decimal?>("TotalInvested")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -170,9 +172,6 @@ namespace DataMigrations
                     b.Property<decimal?>("DailyGainLoss")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("ExchangeMarket")
                         .HasColumnType("TEXT");
 
@@ -186,10 +185,9 @@ namespace DataMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Ticker")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("ValueAtPurchase")
@@ -324,9 +322,7 @@ namespace DataMigrations
                 {
                     b.HasOne("API.Data.Entities.ApplicationUser", "User")
                         .WithMany("Stocks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

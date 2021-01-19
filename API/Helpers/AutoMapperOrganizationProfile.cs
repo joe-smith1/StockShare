@@ -1,4 +1,5 @@
-﻿using API.Data.Dtos;
+﻿using System;
+using API.Data.Dtos;
 using API.Data.Entities;
 using AutoMapper;
 
@@ -19,6 +20,10 @@ namespace API.Helpers
             // ApplicationUser Mappings.
             CreateMap<ApplicationUser, AuthenticatedUserDto>();
             CreateMap<RegisterDto, ApplicationUser>();
+
+            // Stock Mappings.
+            CreateMap<StockCreationDto, Stock>();
+            CreateMap<Stock, StockDto>();
         }
     }
 }

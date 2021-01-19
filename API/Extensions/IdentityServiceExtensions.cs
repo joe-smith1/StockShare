@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using API.Data;
 using API.Data.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -68,6 +69,8 @@ namespace API.Extensions
 
                     };
                 });
+
+            services.AddAuthorization();
             return services;
         }
     }

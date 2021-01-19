@@ -52,7 +52,7 @@ namespace API.Controllers
         /// along with a JWT token for later authentication.</returns>
         [Route("register")]
         [HttpPost]
-        public async Task<ActionResult<AuthenticatedUserDto>> RegisterUser(RegisterDto registerDto)
+        public async Task<ActionResult<AuthenticatedUserDto>> RegisterUserAsync(RegisterDto registerDto)
         {
             // Mapping registerDto properties to a new ApplicationUser then creating this new user in our database through identity.
             var userToRegister = _mapper.Map<ApplicationUser>(registerDto);
@@ -92,7 +92,7 @@ namespace API.Controllers
         /// otherwise Unauthorized response.</returns>
         [Route("login")]
         [HttpPost]
-        public async Task<ActionResult<AuthenticatedUserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<AuthenticatedUserDto>> LoginAsync(LoginDto loginDto)
         {
             const string unauthorizedResponse = "Invalid username or password!";
 

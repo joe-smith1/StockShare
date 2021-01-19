@@ -16,8 +16,6 @@ namespace API.Data.Entities
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         public uint Points { get; set; }
         public bool PrivateAccount { get; set; }
-
-        // Nullable properties.
         public string? ProfileDescription { get; set; }
 
         /// <summary>
@@ -27,11 +25,11 @@ namespace API.Data.Entities
         /// <summary>
         /// Decimal/money value amount of loss/gain.
         /// </summary>
-        public decimal? ProfitLoss { get; set; }
+        public decimal ProfitLoss { get; set; }
         /// <summary>
         /// Amount invested over all stocks not including profit/loss just what was put in.
         /// </summary>
-        public decimal? TotalInvested { get; set; }
+        public decimal TotalInvested { get; set; }
         public DateTime? DateOfBirth { get; set; }
         /// <summary>
         /// E.g New York, Tokyo, London. The market the user trades on most.
