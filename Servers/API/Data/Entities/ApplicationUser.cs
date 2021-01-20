@@ -10,7 +10,7 @@ namespace API.Data.Entities
     /// as an entity in the database. It is inheriting IdentityUser which provides handling of user name
     /// password etc.
     /// </summary>
-    public class ApplicationUser : IdentityUser<int>
+    public class ApplicationUser : IdentityUser<Guid>
     {
         public DateTime SignUpDate { get; set; } = DateTime.UtcNow;
         public DateTime LastActive { get; set; } = DateTime.UtcNow;

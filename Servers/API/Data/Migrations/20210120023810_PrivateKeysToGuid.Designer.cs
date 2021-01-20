@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210120023810_PrivateKeysToGuid")]
+    partial class PrivateKeysToGuid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,9 +20,9 @@ namespace DataMigrations
 
             modelBuilder.Entity("API.Data.Entities.ApplicationRole", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -45,9 +47,9 @@ namespace DataMigrations
 
             modelBuilder.Entity("API.Data.Entities.ApplicationUser", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
@@ -69,8 +71,8 @@ namespace DataMigrations
                     b.Property<string>("FavoriteMarket")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("FavoriteStockId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("FavoriteStockId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("InvestmentOrientation")
                         .HasColumnType("TEXT");
@@ -145,11 +147,11 @@ namespace DataMigrations
 
             modelBuilder.Entity("API.Data.Entities.ApplicationUserRole", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -160,9 +162,9 @@ namespace DataMigrations
 
             modelBuilder.Entity("API.Data.Entities.Stock", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("CurrentValue")
                         .HasColumnType("TEXT");
@@ -189,8 +191,8 @@ namespace DataMigrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("ValueAtPurchase")
                         .HasColumnType("TEXT");
@@ -208,7 +210,7 @@ namespace DataMigrations
                     b.ToTable("Stock");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,8 +222,8 @@ namespace DataMigrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -230,7 +232,7 @@ namespace DataMigrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,8 +244,8 @@ namespace DataMigrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -252,7 +254,7 @@ namespace DataMigrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -263,8 +265,8 @@ namespace DataMigrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -273,10 +275,10 @@ namespace DataMigrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -331,7 +333,7 @@ namespace DataMigrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("API.Data.Entities.ApplicationRole", null)
                         .WithMany()
@@ -340,7 +342,7 @@ namespace DataMigrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("API.Data.Entities.ApplicationUser", null)
                         .WithMany()
@@ -349,7 +351,7 @@ namespace DataMigrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("API.Data.Entities.ApplicationUser", null)
                         .WithMany()
@@ -358,7 +360,7 @@ namespace DataMigrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("API.Data.Entities.ApplicationUser", null)
                         .WithMany()

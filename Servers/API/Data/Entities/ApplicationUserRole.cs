@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data.Entities
 {
@@ -7,7 +8,7 @@ namespace API.Data.Entities
     /// and ApplicationRoles. A User can have many Roles and Roles can have many Users.
     /// It is used as the IdentityUserRole in our database context using identity.
     /// </summary>
-    public class ApplicationUserRole : IdentityUserRole<int>
+    public class ApplicationUserRole : IdentityUserRole<Guid>
     {
         public virtual ApplicationUser User { get; set; }
         public virtual ApplicationRole Role { get; set; }

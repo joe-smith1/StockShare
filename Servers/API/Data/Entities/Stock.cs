@@ -10,7 +10,10 @@ namespace API.Data.Entities
     /// </summary>
     public class Stock
     {
-        public int Id { get; set; }
+        /// <summary>
+        /// Id used to identify this entity in our database.
+        /// </summary>
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The Ticker of the stock e.g TSLA

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Data.Entities
@@ -8,7 +9,7 @@ namespace API.Data.Entities
     /// relationship with Application Users aka a user can get to its roles and a role
     /// can get to its users.
     /// </summary>
-    public class ApplicationRole : IdentityRole<int>
+    public class ApplicationRole : IdentityRole<Guid>
     {
         // Navigational entity relationships.
         // Many to many with ApplicationUsers through ApplicationUserRoles.
