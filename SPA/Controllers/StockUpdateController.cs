@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using SPA.Data;
 using AutoMapper;
 using IdentityServer4.Extensions;
@@ -46,8 +48,12 @@ namespace SPA.Controllers
         public async Task<ActionResult<StockDto>> AddStockAsync(StockCreationDto stockCreationDto)
         {
 
-            // TODO BUG HERE RETURNS NULL
-            var user = await _userManager.GetUserAsync(User);
+            var userId = ((ClaimsIdentity)User.Identity)?.FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
+            // TODO TRY TO GET TO WORK WITH USER MANAGER
+            //var user = await _userManager.GetUserAsync(User);
+            var user = await _context.Users
+                .SingleOrDefaultAsync(u => u.Id == userId);
 
             if (user == null)
             {

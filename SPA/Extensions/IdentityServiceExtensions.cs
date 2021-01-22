@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityModel;
+using IdentityServer4;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
