@@ -19,7 +19,7 @@ namespace SPA.Data
     /// identity e.g automatically normalized names and secure password salt/hashing.
     /// </summary>
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
-    {
+    {                 // ApiAuthorizationDbContext is a more derived IdentityDbContext with IPersistedGrantDbContext to include IdentityServer Schema.
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

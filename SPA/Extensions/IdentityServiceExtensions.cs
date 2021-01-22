@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,13 +33,28 @@ namespace SPA.Extensions
                     options.User.RequireUniqueEmail = true;
                 })
                 .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddUserManager<UserManager<ApplicationUser>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            // Configures app to validate JWT tokens issued by IdentityServer for this application.
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.Configure<JwtBearerOptions>(
+                IdentityServerJwtConstants.IdentityServerJwtBearerScheme, options =>
+                {
+                    var onTokenValidated = options.Events.OnTokenValidated;
+
+                    // Event handler custom implementation would run original implementation aka onTokenValidated then runs its custom logic.
+                    options.Events.OnTokenValidated = async context =>
+                    {
+                        await onTokenValidated(context);
+                        // Custom Logic would go here ...
+                    };
+                });
 
 
             return services;

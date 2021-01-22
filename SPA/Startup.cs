@@ -75,7 +75,10 @@ namespace SPA
             app.UseRouting();
 
             app.UseAuthentication();
+
+            // Exposes Oidc endpoints.
             app.UseIdentityServer();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
