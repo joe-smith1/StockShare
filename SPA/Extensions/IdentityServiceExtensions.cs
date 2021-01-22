@@ -32,6 +32,7 @@ namespace SPA.Extensions
                     options.SignIn.RequireConfirmedAccount = true;
                     options.User.RequireUniqueEmail = true;
                 })
+                .AddRoles<IdentityRole>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddUserManager<UserManager<ApplicationUser>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

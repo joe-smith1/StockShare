@@ -8,6 +8,10 @@ namespace SPA.Models.Dtos
     public class StockDto
     {
         /// <summary>
+        /// Id used to identify this entity in our database.
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
         /// The Ticker of the stock e.g TSLA.
         /// </summary>
         public string Ticker { get; set; }

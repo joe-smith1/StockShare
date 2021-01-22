@@ -4,32 +4,31 @@ using System.ComponentModel.DataAnnotations;
 namespace SPA.Models.Dtos
 {
     /// <summary>
-    /// Dto used for the creation of a stock through a POST request e.g when
-    /// the client makes a POST request to create a stock the body of that request
-    /// is mapped into this DTO.
+    /// Dto used for updating a stock entity through a PUT request.
     /// </summary>
-    public class StockCreationDto
+    public class StockUpdateDto
     {
+        /// <summary>
+        /// Id used to identify the related entity in our database.
+        /// </summary>
+        [Required]
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The Ticker of the stock e.g TSLA.
-        /// Is a required property.
         /// </summary>
-        [Required]
         public string Ticker { get; set; }
 
         /// <summary>
         /// The number of shares bought for this stock.
-        /// Is a required property.
         /// </summary>
-        [Required]
+
         public decimal Shares { get; set; }
 
         /// <summary>
         /// The Date that this stock was purchased.
-        /// If no value is provided the stock purchase date defaults to now in the Stock entity.
         /// </summary>
-        public DateTime PurchaseDate { get; set; } = DateTime.UtcNow;
+        public DateTime PurchaseDate { get; set; }
 
         /// <summary>
         /// The value of a single share of this stock at the purchase date.

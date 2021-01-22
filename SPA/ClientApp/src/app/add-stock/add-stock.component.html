@@ -1,0 +1,16 @@
+<form #stockAddForm="ngForm" id="stockAddForm" (ngSubmit)="addStock()">
+  <h4>Ticker:</h4>
+  <input class='form-control' [(ngModel)]="stockToAdd.Ticker" name='Ticker' type="text">
+  <h4 class="mt-2">Shares:</h4>
+  <input class='form-control' [(ngModel)]="stockToAdd.Shares" name='Shares' type="text">
+  <h4 class="mt-2">Purchase Date:</h4>
+  <input class="mt-2" [(ngModel)]="stockToAdd.PurchaseDate" name='PurchaseDate' type="date">
+  <h4 class="mt-2">Exchange Market:</h4>
+  <input class="form-control" [(ngModel)]="stockToAdd.ExchangeMarket" name="ExchangeMarket" type="text">
+  <h4 class="mt-2">Value At Purchase:</h4>
+  <input class="form-control" [(ngModel)]="stockToAdd.ValueAtPurchase" name="ValueAtPurchase" type="text">
+  <button [disabled]="!stockAddForm.dirty" type="submit" class="btn btn-success btn-block">Add Stock!</button>
+</form>
+
+<p *ngIf="error">Error Happened :(</p>
+<p *ngIf="added">Stock Added Successfully(</p>
