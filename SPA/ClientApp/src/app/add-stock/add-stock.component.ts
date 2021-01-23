@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { StockCreation } from '../_models/StockCreation';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-add-stock',
@@ -9,27 +8,25 @@ import { StockCreation } from '../_models/StockCreation';
   styleUrls: ['./add-stock.component.css']
 })
 export class AddStockComponent implements OnInit {
-  @ViewChild('stockAddForm') stockAddForm: NgForm;
-
-  stockToAdd: StockCreation;
+  stockAddForm: FormGroup;
   error: boolean = false;
   added: boolean = false;
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
+  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
-    // USING AS A CHEAP WAY TO GET OVER ERRORS WILL NEED TO CHANGE FORM TYPE.
-    this.stockToAdd = {
-      Ticker: 'TSLA',
-      Shares: 55,
-      PurchaseDate: Date.now.toString(),
-      ValueAtPurchase: 840.55,
-      ExchangeMarket: 'NYSE'
-    };
+    this.stockAddForm = this.fb.group({
+      Ticker: ["", Validators.required],
+      Shares: ["", Validators.required],
+      PurchaseDate: [""],
+      ValueAtPurchase: [],
+      ExchangeMarket: []
+    })
   }
 
   addStock() {
-    this.http.post(this.baseUrl + "api/stockupdate/add-stock", this.stockToAdd)
+    this.http.post(this.baseUrl + "api/stockupdate/add-stock", this.stockAddForm.value)
       .subscribe(result => {
         this.added = true;
       }, error => {
