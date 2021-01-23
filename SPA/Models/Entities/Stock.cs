@@ -75,6 +75,6 @@ namespace SPA.Models.Entities
         /// Relation to the User that owns this stock.
         /// Will be a foreign key in the database.
         /// </summary>
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

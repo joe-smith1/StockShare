@@ -23,26 +23,26 @@ namespace SPA
     /// </summary>
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IConfiguration _config;
 
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration config)
+        {
+            _config = config;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             //// Extension methods for cleaner custom service setup.
-            services.AddCustomServices(Configuration);
-            services.AddIdentityServices(Configuration);
+            services.AddCustomServices(_config);
+            services.AddIdentityServices();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

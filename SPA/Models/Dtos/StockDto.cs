@@ -11,22 +11,27 @@ namespace SPA.Models.Dtos
         /// Id used to identify this entity in our database.
         /// </summary>
         public Guid Id { get; set; }
+
         /// <summary>
         /// The Ticker of the stock e.g TSLA.
         /// </summary>
         public string Ticker { get; set; }
+
         /// <summary>
         /// Number of shares of this stock that were purchased.
         /// </summary>
         public decimal Shares { get; set; }
+
         /// <summary>
         /// The date and time that the purchase of this stock was made.
         /// </summary>
         public DateTime PurchaseDate { get; set; }
+
         /// <summary>
         /// The value of a single share at the time of purchase.
         /// </summary>
         public decimal ValueAtPurchase { get; set; }
+
         /// <summary>
         /// The current market value of a single share.
         /// </summary>

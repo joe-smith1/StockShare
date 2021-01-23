@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -26,7 +27,7 @@ namespace SPA.Extensions
         /// </summary>
         /// <param name="services">Service collection to add the identity services too.</param>
         /// <returns><paramref name="services"/> with the added identity services.</returns>
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
         {
             services.AddDefaultIdentity<ApplicationUser>(options =>
                 {
@@ -39,6 +40,11 @@ namespace SPA.Extensions
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddUserManager<UserManager<ApplicationUser>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Clearing the default claim mappings so we use IdentityServers inbound claim mapping instead.
+            // this causes UserManagers GetUserAsync to work on our ClaimsPrincipal as its now getting
+            // the UserIdClaimType from the sub claim in JWT.
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();

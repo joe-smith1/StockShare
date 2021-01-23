@@ -17,11 +17,11 @@ namespace SPA.Helpers
         public AutoMapperOrganizationProfile()
         {
             // ApplicationUser Mappings.
-            CreateMap<ApplicationUser, AuthenticatedUserDto>();
             CreateMap<RegisterDto, ApplicationUser>();
 
             // Stock Mappings.
             CreateMap<StockCreationDto, Stock>();
+            CreateMap<StockUpdateDto, Stock>();
             CreateMap<Stock, StockDto>();
         }
     }

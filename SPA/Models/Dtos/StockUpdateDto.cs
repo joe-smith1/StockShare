@@ -22,7 +22,6 @@ namespace SPA.Models.Dtos
         /// <summary>
         /// The number of shares bought for this stock.
         /// </summary>
-
         public decimal Shares { get; set; }
 
         /// <summary>

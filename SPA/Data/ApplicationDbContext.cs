@@ -26,6 +26,9 @@ namespace SPA.Data
         {
         }
 
+        /// <summary>
+        /// Stocks table in our database, used for querying this table.
+        /// </summary>
         public DbSet<Stock> Stocks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -34,30 +37,19 @@ namespace SPA.Data
 
             builder.Entity<ApplicationUser>(b =>
             {
-                //// Each User can have many Roles through UserRoles.
-                //b.HasMany<ApplicationUserRole>(u => u.UserRoles)
-                //    .WithOne(ur => ur.User)
-                //    .HasForeignKey(ur => ur.UserId)
-                //    .IsRequired();
-
                 // Each User can have many Stocks.
                 b.HasMany<Stock>(u => u.Stocks)
                     .WithOne(s => s.User)
                     .IsRequired();
             });
 
-            //builder.Entity<ApplicationRole>(b =>
-            //{
-            //    // Each Role can have many Users through UserRoles.
-            //    b.HasMany<ApplicationUserRole>(r => r.UserRoles)
-            //        .WithOne(ur => ur.Role)
-            //        .HasForeignKey(ur => ur.RoleId)
-            //        .IsRequired();
-            //});
-
             builder.Entity<Stock>(b =>
             {
                 b.Property(s => s.Ticker)
+                    .IsRequired();
+
+                b.HasOne(s => s.User)
+                    .WithMany(u => u.Stocks)
                     .IsRequired();
             });
         }

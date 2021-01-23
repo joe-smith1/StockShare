@@ -47,13 +47,7 @@ namespace SPA.Controllers
         [Authorize]
         public async Task<ActionResult<StockDto>> AddStockAsync(StockCreationDto stockCreationDto)
         {
-
-            var userId = ((ClaimsIdentity)User.Identity)?.FindFirst(ClaimTypes.NameIdentifier)
-                ?.Value;
-            // TODO TRY TO GET TO WORK WITH USER MANAGER
-            //var user = await _userManager.GetUserAsync(User);
-            var user = await _context.Users
-                .SingleOrDefaultAsync(u => u.Id == userId);
+            var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
@@ -74,6 +68,7 @@ namespace SPA.Controllers
             var stockDto = _mapper.Map<StockDto>(stock);
             return CreatedAtRoute("", stockDto);    // ADD THE ACTION ROUTE NAME ONCE CREATED TO GET AN INDIVIDUAL STOCK.
         }
+
 
         [HttpPut]
         [Route("update-stock")]
