@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl} from '@angular/forms';
 
 @Component({
   selector: 'app-add-stock',
@@ -11,6 +11,8 @@ export class AddStockComponent implements OnInit {
   stockAddForm: FormGroup;
   error: boolean = false;
   added: boolean = false;
+  maxDate: Date;
+  validationErrors: string[] = [];
 
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string,
     private fb: FormBuilder) { }
@@ -18,20 +20,22 @@ export class AddStockComponent implements OnInit {
   ngOnInit() {
     this.stockAddForm = this.fb.group({
       Ticker: ["", Validators.required],
-      Shares: ["", Validators.required],
+      Shares: ["", [Validators.required]],
       PurchaseDate: [""],
       ValueAtPurchase: [],
       ExchangeMarket: []
     })
+
+    this.maxDate = new Date();
+    this.maxDate.setDate(this.maxDate.getDate());
   }
 
-  addStock() {
+  addStock(): void {
     this.http.post(this.baseUrl + "api/stockupdate/add-stock", this.stockAddForm.value)
       .subscribe(result => {
         this.added = true;
       }, error => {
-        this.error = true;
+        this.validationErrors = error;
       })
   }
-
 }

@@ -1,16 +1,26 @@
 <form [formGroup]="stockAddForm" (ngSubmit)="stockAddForm.valid && addStock()" autocomplete="off">
   <h4>Ticker:</h4>
-  <input class='form-control' formControlName='Ticker' type="text">
+  <app-text-input [label]='"Ticker"' [formControl]='stockAddForm.controls["Ticker"]'></app-text-input>
   <h4 class="mt-2">Shares:</h4>
-  <input class='form-control' formControlName='Shares' type="text">
+  <app-text-input [label]='"Shares"' [formControl]='stockAddForm.controls["Shares"]' [type]='"number"'></app-text-input>
   <h4 class="mt-2">Purchase Date:</h4>
-  <input class="mt-2" formControlName='PurchaseDate' type="date">
+  <app-date-input [formControl]="stockAddForm.controls['PurchaseDate']" [label]='"Purchase date"' [maxDate]="maxDate">
+  </app-date-input>
   <h4 class="mt-2">Exchange Market:</h4>
-  <input class="form-control" formControlName="ExchangeMarket" type="text">
+  <app-text-input [label]='"Exchange Market"' [formControl]='stockAddForm.controls["ExchangeMarket"]'></app-text-input>
   <h4 class="mt-2">Value At Purchase:</h4>
-  <input class="form-control" formControlName="ValueAtPurchase" type="text">
-  <button [disabled]="!stockAddForm.valid" type="submit" class="btn btn-success btn-block">Add Stock!</button>
+  <app-text-input [label]='"Value At Purchase"' [formControl]='stockAddForm.controls["ValueAtPurchase"]'
+    [type]='"number"'>
+  </app-text-input>
+  <div class="row" *ngIf="validationErrors.length > 0">
+    <ul class="text-danger">
+      <li *ngFor="let error of validationErrors">
+        {{error}}
+      </li>
+    </ul>
+  </div>
+  <button [disabled]="!stockAddForm.valid" type="submit" class="btn btn-success btn-block mt-4">Add Stock!</button>
 </form>
 
 <p *ngIf="error">Error Happened :(</p>
-<p *ngIf="added">Stock Added Successfully(</p>
+<p *ngIf="added">Stock Added Successfully:)</p>

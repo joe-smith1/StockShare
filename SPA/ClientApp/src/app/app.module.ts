@@ -14,7 +14,10 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { StockCardComponent } from './stock-card/stock-card.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
-
+import { DateInputComponent } from './_form-components/date-input/date-input.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TextInputComponent } from './_form-components/text-input/text-input.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,13 +26,17 @@ import { AddStockComponent } from './add-stock/add-stock.component';
     CounterComponent,
     FetchDataComponent,
     StockCardComponent,
-    AddStockComponent
+    AddStockComponent,
+    DateInputComponent,
+    TextInputComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
