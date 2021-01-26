@@ -1,7 +1,7 @@
 export interface StockToAdd {
   Ticker: string,
-  Shares: number | string,
+  Shares: number,
   PurchaseDate: Date,
-  ValueAtPurchase: number | string,
+  ValueAtPurchase: number,
   ExchangeMarket: string
 }
