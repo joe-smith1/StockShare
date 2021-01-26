@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using SPA.Models.Dtos;
 using SPA.Models.Entities;
 
@@ -20,8 +21,29 @@ namespace SPA.Helpers
             CreateMap<RegisterDto, ApplicationUser>();
 
             // Stock Mappings.
-            CreateMap<StockCreationDto, Stock>();
-            CreateMap<StockUpdateDto, Stock>();
+
+            // Mapping the PurchaseDate of our stock entity to UTC Now if the dtos date is null.
+            CreateMap<StockCreationDto, Stock>()
+                .ForMember(dest => dest.PurchaseDate, options => options.MapFrom(src => src.PurchaseDate ?? DateTime.UtcNow));
+
+            CreateMap<StockUpdateDto, Stock>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Ticker,
+                    options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.Ticker.Trim()) ? dest.Ticker : src.Ticker))
+                .ForMember(dest => dest.Shares,
+                    options => options.MapFrom((src, dest) => src.Shares ?? dest.Shares))
+                .ForMember(dest => dest.PurchaseDate,
+                    options =>
+                        options.MapFrom((src, dest) => src.PurchaseDate ?? dest.PurchaseDate))
+                .ForMember(dest => dest.ValueAtPurchase,
+                    options =>
+                        options.MapFrom((src, dest) => src.ValueAtPurchase ?? dest.ValueAtPurchase))
+                .ForMember(dest => dest.ExchangeMarket,
+                    options =>
+                        options.MapFrom((src, dest) =>
+                            string.IsNullOrEmpty(src.ExchangeMarket.Trim()) ? dest.ExchangeMarket : src.ExchangeMarket));
+
+
             CreateMap<Stock, StockDto>();
         }
     }

@@ -18,6 +18,7 @@ import { DateInputComponent } from './_form-components/date-input/date-input.com
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextInputComponent } from './_form-components/text-input/text-input.component';
+import { UpdateStockComponent } from './update-stock/update-stock.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { TextInputComponent } from './_form-components/text-input/text-input.com
     AddStockComponent,
     DateInputComponent,
     TextInputComponent,
+    UpdateStockComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,7 +45,8 @@ import { TextInputComponent } from './_form-components/text-input/text-input.com
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'stock-card', component: StockCardComponent, canActivate: [AuthorizeGuard] },
-      { path: 'add-stock', component: AddStockComponent, canActivate: [AuthorizeGuard]}
+      { path: 'add-stock', component: AddStockComponent, canActivate: [AuthorizeGuard] },
+      { path: 'update-stock', component: UpdateStockComponent, canActivate: [AuthorizeGuard] }
     ])
   ],
   providers: [

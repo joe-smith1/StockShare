@@ -12,6 +12,7 @@
   <app-text-input [label]='"Value At Purchase"' [formControl]='stockAddForm.controls["ValueAtPurchase"]'
     [type]='"number"'>
   </app-text-input>
+  <button [disabled]="!stockAddForm.valid" type="submit" class="btn btn-success btn-block mt-4">Add Stock!</button>
   <div class="row" *ngIf="validationErrors.length > 0">
     <ul class="text-danger">
       <li *ngFor="let error of validationErrors">
@@ -19,8 +20,5 @@
       </li>
     </ul>
   </div>
-  <button [disabled]="!stockAddForm.valid" type="submit" class="btn btn-success btn-block mt-4">Add Stock!</button>
 </form>
-
-<p *ngIf="error">Error Happened :(</p>
 <p *ngIf="added">Stock Added Successfully:)</p>

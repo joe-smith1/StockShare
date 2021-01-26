@@ -1,0 +1,31 @@
+<form [formGroup]="stockUpdateForm" (ngSubmit)="stockUpdateForm.valid && updateStock()" autocomplete="off">
+  <h4>Stock Id FOR TESTING:</h4>
+  <app-text-input [label]="'Id'" [formControl]="stockUpdateForm.controls['Id']"></app-text-input>
+  <h4>Ticker:</h4>
+  <app-text-input [label]='"Ticker"' [formControl]='stockUpdateForm.controls["Ticker"]'></app-text-input>
+  <h4 class="mt-2">Shares:</h4>
+  <app-text-input [label]='"Shares"' [formControl]='stockUpdateForm.controls["Shares"]' [type]='"number"'>
+  </app-text-input>
+  <h4 class="mt-2">Purchase Date:</h4>
+  <app-date-input [formControl]="stockUpdateForm.controls['PurchaseDate']" [label]='"Purchase date"'
+    [maxDate]="maxDate">
+  </app-date-input>
+  <h4 class="mt-2">Exchange Market:</h4>
+  <app-text-input [label]='"Exchange Market"' [formControl]='stockUpdateForm.controls["ExchangeMarket"]'>
+  </app-text-input>
+  <h4 class="mt-2">Value At Purchase:</h4>
+  <app-text-input [label]='"Value At Purchase"' [formControl]='stockUpdateForm.controls["ValueAtPurchase"]'
+    [type]='"number"'>
+  </app-text-input>
+  <button [disabled]='!stockUpdateForm.valid' type="submit" class="btn btn-success btn-block mt-4">Update
+    Stock!</button>
+  <div class="row" *ngIf="validationErrors.length > 0">
+    <ul class="text-danger">
+      <li *ngFor="let error of validationErrors">
+        {{error}}
+      </li>
+    </ul>
+  </div>
+</form>
+
+<p *ngIf="updated">Stock Updated :)</p>

@@ -22,17 +22,17 @@ namespace SPA.Models.Dtos
         /// <summary>
         /// The number of shares bought for this stock.
         /// </summary>
-        public decimal Shares { get; set; }
+        public decimal? Shares { get; set; }
 
         /// <summary>
         /// The Date that this stock was purchased.
         /// </summary>
-        public DateTime PurchaseDate { get; set; }
+        public DateTime? PurchaseDate { get; set; }
 
         /// <summary>
         /// The value of a single share of this stock at the purchase date.
         /// </summary>
-        public decimal ValueAtPurchase { get; set; } // TODO Set ValueAtPurchase based off purchase Date using finance api instead of passing it in.
+        public decimal? ValueAtPurchase { get; set; } // TODO Set ValueAtPurchase based off purchase Date using finance api instead of passing it in.
 
         /// <summary>
         /// The Exchange Market of this stock e.g what market it is traded on.

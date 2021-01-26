@@ -71,8 +71,15 @@ namespace SPA.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 // Signing in the user using the email.
                 var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+
+                }
                 var result = await _signInManager.PasswordSignInAsync(user, Input.Password,
                     Input.RememberMe, false);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl} from '@angular/forms';
+import { StockToAdd } from '../_models/StockToAdd';
 
 @Component({
   selector: 'app-add-stock',
@@ -19,11 +20,11 @@ export class AddStockComponent implements OnInit {
 
   ngOnInit() {
     this.stockAddForm = this.fb.group({
-      Ticker: ["", Validators.required],
-      Shares: ["", [Validators.required]],
-      PurchaseDate: [""],
-      ValueAtPurchase: [],
-      ExchangeMarket: []
+      Ticker: ['', Validators.required],
+      Shares: [, [Validators.required]],
+      PurchaseDate: [],
+      ValueAtPurchase: [, [Validators.required]],
+      ExchangeMarket: ['']
     })
 
     this.maxDate = new Date();
@@ -31,7 +32,7 @@ export class AddStockComponent implements OnInit {
   }
 
   addStock(): void {
-    this.http.post(this.baseUrl + "api/stockupdate/add-stock", this.stockAddForm.value)
+    this.http.post(this.baseUrl + "api/stockupdate/add-stock", <StockToAdd>this.stockAddForm.value)
       .subscribe(result => {
         this.added = true;
       }, error => {

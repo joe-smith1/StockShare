@@ -25,16 +25,19 @@ namespace SPA.Models.Dtos
         [Required]
         public decimal Shares { get; set; }
 
-        /// <summary>
-        /// The Date that this stock was purchased.
-        /// If no value is provided the stock purchase date defaults to now in the Stock entity.
-        /// </summary>
-        public DateTime PurchaseDate { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// The value of a single share of this stock at the purchase date.
+        /// Is a required property.
         /// </summary>
-        public decimal ValueAtPurchase { get; set; } // TODO Set ValueAtPurchase based off purchase Date using finance api instead of passing it in.
+        [Required] // TODO CURRENTLY REQUIRED BUT IN FUTURE TRY  Set ValueAtPurchase based off purchase Date using finance api instead of passing it in.
+        public decimal ValueAtPurchase { get; set; }
+
+        /// <summary>
+        /// The Date that this stock was purchased.
+        /// If no value is provided the stock purchase date defaults to utc now in the Stock entity.
+        /// </summary>
+        public DateTime? PurchaseDate { get; set; }
 
         /// <summary>
         /// The Exchange Market of this stock e.g what market it is traded on.

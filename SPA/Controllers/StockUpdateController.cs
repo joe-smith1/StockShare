@@ -83,7 +83,9 @@ namespace SPA.Controllers
                 return BadRequest($"A stock with the id provided ({stockUpdateDto.Id}) does not exist!");
             }
 
-            stock = _mapper.Map(stockUpdateDto, stock);
+            _mapper.Map(stockUpdateDto, stock);
+
+            await _context.SaveChangesAsync();
 
             return Ok();
         }
