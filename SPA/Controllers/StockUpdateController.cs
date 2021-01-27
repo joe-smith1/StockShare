@@ -69,7 +69,15 @@ namespace SPA.Controllers
             return CreatedAtRoute("", stockDto);    // ADD THE ACTION ROUTE NAME ONCE CREATED TO GET AN INDIVIDUAL STOCK.
         }
 
-
+        /// <summary>
+        /// Action to update an existing Stock entity the Id in the StockUpdateDto is required so
+        /// if an Entity exists we will replace the provided properties in the dto into the
+        /// corosponding stock entity, any null or empty properties in the dto will not override those
+        /// in the entity.
+        /// </summary>
+        /// <param name="stockUpdateDto">The DTO that contains the properties provided in the
+        /// body of the request.</param>
+        /// <returns>200 OK if changes were added otherwise BadRequest as we cant find the entity to update.</returns>
         [HttpPut]
         [Route("update-stock")]
         [Authorize]

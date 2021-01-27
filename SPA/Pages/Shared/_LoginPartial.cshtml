@@ -5,19 +5,38 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
+    ApplicationUser user = await UserManager.GetUserAsync(User);
+
     string returnUrl = null;
     var query = ViewContext.HttpContext.Request.Query;
     if (query.ContainsKey("returnUrl"))
     {
         returnUrl = query["returnUrl"];
     }
+
+    string welcomeUser;
+
+    if (user == null)
+    {
+        welcomeUser = string.Empty;
+    }
+    else
+    {
+        welcomeUser = user.UserName;
+        if (string.IsNullOrEmpty(welcomeUser))
+        {
+            welcomeUser = user.Email;
+        }
+    }
+
+
 }
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @welcomeUser!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
