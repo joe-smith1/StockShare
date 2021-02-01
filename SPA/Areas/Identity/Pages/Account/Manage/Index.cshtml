@@ -36,9 +36,18 @@
                 <span asp-validation-for="Input.FavoriteMarket" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.PrivateAccount"></label>
-                <input asp-for="Input.PrivateAccount" class="checkbox" />
-                <span asp-validation-for="Input.PrivateAccount" class="text-danger"></span>
+                <label asp-for="Input.FavoriteStockTicker"></label>
+                <input asp-for="Input.FavoriteStockTicker" class="form-control" />
+                <span asp-validation-for="Input.FavoriteStockTicker" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="Input.PrivateAccount">
+                        <input asp-for="Input.PrivateAccount" />
+                        @Html.DisplayNameFor(model => model.Input.PrivateAccount)
+                    </label>
+
+                </div>
             </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>

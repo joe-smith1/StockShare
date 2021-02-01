@@ -1,8 +1,8 @@
 export interface StockToUpdate {
-  Id: string,
-  Ticker: string,
-  Shares: number | string,
-  PurchaseDate: Date,
-  ValueAtPurchase: number | string,
-  ExchangeMarket: string
+  id: string,
+  ticker: string,
+  shares: number | string,
+  purchaseDate: Date,
+  valueAtPurchase: number | string,
+  exchangeMarket: string
 }

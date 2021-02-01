@@ -13,22 +13,22 @@ namespace SPA.Models.Dtos
         /// If this users account should be shown to other users and if their stocks should be posted.
         /// </summary>
         [Display(Name = "Private account")]
-        public bool? PrivateAccount { get; set; }
+        public bool PrivateAccount { get; set; }
 
         /// <summary>
-        /// Generic profile description for the user e.g a bio this is optional.
+        /// Generic profile description for the user e.g a bio.
         /// </summary>
         [Display(Name = "Description")]
         public string ProfileDescription { get; set; }
 
         /// <summary>
-        /// Preferred Investment Type e.g shorts vs puts bulls vs bears this is optional.
+        /// Preferred Investment Type e.g shorts vs puts bulls vs bears.
         /// </summary>
         [Display(Name = "Investment orientation")]
         public string InvestmentOrientation { get; set; }
 
         /// <summary>
-        /// E.g New York, Tokyo, London. The market the user trades on most this is optional.
+        /// E.g New York, Tokyo, London. The market the user trades on most.
         /// </summary>
         [Display(Name = "Favorite market")]
         public string FavoriteMarket { get; set; }
@@ -45,5 +45,11 @@ namespace SPA.Models.Dtos
         /// </summary>
         [Display(Name = "Username")]
         public string UserName { get; set; }
+
+        /// <summary>
+        /// Name of the favorite Stock of the user.
+        /// </summary>
+        [Display(Name = "Favorite stock")]
+        public string FavoriteStockTicker { get; set; }
     }
 }

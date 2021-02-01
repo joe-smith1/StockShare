@@ -63,6 +63,12 @@ namespace SPA.Models.Entities
         /// </summary>
         public string? FavoriteMarket { get; set; }
 
+        /// <summary>
+        /// Name of the favorite Stock of the user.
+        /// </summary>
+        public string? FavoriteStockTicker { get; set; }
+
+
         // Navigational entity relationships.
 
         /// <summary>
@@ -70,9 +76,6 @@ namespace SPA.Models.Entities
         /// </summary>
         public ICollection<Stock> Stocks { get; set; } = new List<Stock>();
 
-        /// <summary>
-        /// Foreign Key to the favorite Stock of the user.
-        /// </summary>
-        public Stock? FavoriteStock { get; set; }
+
     }
 }

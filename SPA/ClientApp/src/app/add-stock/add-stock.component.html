@@ -1,15 +1,15 @@
 <form [formGroup]="stockAddForm" (ngSubmit)="stockAddForm.valid && addStock()" autocomplete="off">
   <h4>Ticker:</h4>
-  <app-text-input [label]='"Ticker"' [formControl]='stockAddForm.controls["Ticker"]'></app-text-input>
+  <app-text-input [label]='"Ticker"' [formControl]='stockAddForm.controls["ticker"]'></app-text-input>
   <h4 class="mt-2">Shares:</h4>
-  <app-text-input [label]='"Shares"' [formControl]='stockAddForm.controls["Shares"]' [type]='"number"'></app-text-input>
+  <app-text-input [label]='"Shares"' [formControl]='stockAddForm.controls["shares"]' [type]='"number"'></app-text-input>
   <h4 class="mt-2">Purchase Date:</h4>
-  <app-date-input [formControl]="stockAddForm.controls['PurchaseDate']" [label]='"Purchase date"' [maxDate]="maxDate">
+  <app-date-input [formControl]="stockAddForm.controls['purchaseDate']" [label]='"Purchase date"' [maxDate]="maxDate">
   </app-date-input>
   <h4 class="mt-2">Exchange Market:</h4>
-  <app-text-input [label]='"Exchange Market"' [formControl]='stockAddForm.controls["ExchangeMarket"]'></app-text-input>
+  <app-text-input [label]='"Exchange Market"' [formControl]='stockAddForm.controls["exchangeMarket"]'></app-text-input>
   <h4 class="mt-2">Value At Purchase:</h4>
-  <app-text-input [label]='"Value At Purchase"' [formControl]='stockAddForm.controls["ValueAtPurchase"]'
+  <app-text-input [label]='"Value At Purchase"' [formControl]='stockAddForm.controls["valueAtPurchase"]'
     [type]='"number"'>
   </app-text-input>
   <button [disabled]="!stockAddForm.valid" type="submit" class="btn btn-success btn-block mt-4">Add Stock!</button>

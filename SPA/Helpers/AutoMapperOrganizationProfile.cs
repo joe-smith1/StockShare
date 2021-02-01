@@ -24,12 +24,13 @@ namespace SPA.Helpers
 
             // TODO research better way of doing this its very repetitive.
             CreateMap<AccountUpdateDto, ApplicationUser>()
-                .ForMember(dest => dest.UserName, options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.UserName) ? dest.UserName : src.UserName))
-                .ForMember(dest => dest.PhoneNumber, options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.PhoneNumber) ? dest.PhoneNumber : src.PhoneNumber))
-                .ForMember(dest => dest.FavoriteMarket, options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.FavoriteMarket) ? dest.FavoriteMarket : src.FavoriteMarket))
-                .ForMember(dest => dest.InvestmentOrientation, options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.InvestmentOrientation) ? dest.InvestmentOrientation : src.InvestmentOrientation))
-                .ForMember(dest => dest.ProfileDescription, options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.ProfileDescription) ? dest.ProfileDescription : src.ProfileDescription))
-                .ForMember(dest => dest.PrivateAccount, options => options.MapFrom((src, dest) => src.PrivateAccount ?? dest.PrivateAccount));
+                .ForMember(dest => dest.UserName,
+                    options => options.MapFrom((src, dest) => src.UserName ?? dest.UserName));
+            //.ForMember(dest => dest.PhoneNumber, options => options.MapFrom((src, dest) => src.PhoneNumber ?? dest.PhoneNumber))
+            //.ForMember(dest => dest.FavoriteMarket, options => options.MapFrom((src, dest) => src.FavoriteMarket ?? dest.FavoriteMarket))
+            //.ForMember(dest => dest.InvestmentOrientation, options => options.MapFrom((src, dest) => src.InvestmentOrientation ?? dest.InvestmentOrientation))
+            //.ForMember(dest => dest.ProfileDescription, options => options.MapFrom((src, dest) => src.ProfileDescription ?? dest.ProfileDescription))
+            //.ForMember(dest => dest.FavoriteStockTicker, options => options.MapFrom((src, dest) => src.FavoriteStockTicker ?? dest.FavoriteStockTicker));
 
 
             // Stock Mappings.
@@ -43,7 +44,7 @@ namespace SPA.Helpers
             CreateMap<StockUpdateDto, Stock>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Ticker,
-                    options => options.MapFrom((src, dest) => string.IsNullOrEmpty(src.Ticker) ? dest.Ticker : src.Ticker))
+                    options => options.MapFrom((src, dest) => string.IsNullOrWhiteSpace(src.Ticker) ? dest.Ticker : src.Ticker))
                 .ForMember(dest => dest.Shares,
                     options => options.MapFrom((src, dest) => src.Shares ?? dest.Shares))
                 .ForMember(dest => dest.PurchaseDate,
@@ -55,7 +56,7 @@ namespace SPA.Helpers
                 .ForMember(dest => dest.ExchangeMarket,
                     options =>
                         options.MapFrom((src, dest) =>
-                            string.IsNullOrEmpty(src.ExchangeMarket) ? dest.ExchangeMarket : src.ExchangeMarket));
+                            string.IsNullOrWhiteSpace(src.ExchangeMarket) ? dest.ExchangeMarket : src.ExchangeMarket));
 
 
             CreateMap<Stock, StockDto>();

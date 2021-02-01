@@ -1,1 +1,6 @@
-<p>stock-card works!</p>
+<div *ngIf="stock" class="card">
+  <div class="card-body">
+    <h2 class="card-title">{{stock.ticker}}</h2>
+    <h4 class="card-subtitle">Shares: {{stock.shares}}</h4>
+  </div>
+</div>

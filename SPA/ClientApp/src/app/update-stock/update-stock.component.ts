@@ -17,12 +17,12 @@ export class UpdateStockComponent implements OnInit {
 
   ngOnInit(): void {
     this.stockUpdateForm = this.fb.group({
-        Id: ['', [Validators.required]],
-        Ticker: [''],
-        Shares: [],
-        PurchaseDate: [],
-        ValueAtPurchase: [],
-        ExchangeMarket: ['']
+        id: ['', [Validators.required]],
+        ticker: [''],
+        shares: [],
+        purchaseDate: [],
+        valueAtPurchase: [],
+        exchangeMarket: ['']
     });
 
     this.maxDate = new Date();
@@ -37,8 +37,8 @@ export class UpdateStockComponent implements OnInit {
     // Setting these number values to null if they are empty e.g empty string as otherwise we get a validation error
     // as the apis DTO to map to is expecting numbers but the form provides us with strings e.g in the case of
     // writing a number in the control then removing it returns '' which isn't mappable to decimal in our api.
-    stockToUpdate.Shares = stockToUpdate.Shares ? stockToUpdate.Shares : null;
-    stockToUpdate.ValueAtPurchase = stockToUpdate.ValueAtPurchase ? stockToUpdate.ValueAtPurchase : null;
+    stockToUpdate.shares = stockToUpdate.shares ? stockToUpdate.shares : null;
+    stockToUpdate.valueAtPurchase = stockToUpdate.valueAtPurchase ? stockToUpdate.valueAtPurchase : null;
 
     this.http.put(this.baseUrl + 'api/stockupdate/update-stock', stockToUpdate)
       .subscribe(response => {

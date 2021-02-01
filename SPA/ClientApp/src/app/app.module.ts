@@ -19,6 +19,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextInputComponent } from './_form-components/text-input/text-input.component';
 import { UpdateStockComponent } from './update-stock/update-stock.component';
+import { StockFeedComponent } from './stock-feed/stock-feed.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { UpdateStockComponent } from './update-stock/update-stock.component';
     DateInputComponent,
     TextInputComponent,
     UpdateStockComponent,
+    StockFeedComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,7 +43,7 @@ import { UpdateStockComponent } from './update-stock/update-stock.component';
     BsDatepickerModule.forRoot(),
     ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: StockFeedComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'stock-card', component: StockCardComponent, canActivate: [AuthorizeGuard] },

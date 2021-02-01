@@ -20,11 +20,11 @@ export class AddStockComponent implements OnInit {
 
   ngOnInit() {
     this.stockAddForm = this.fb.group({
-      Ticker: ['', Validators.required],
-      Shares: [, [Validators.required]],
-      PurchaseDate: [],
-      ValueAtPurchase: [, [Validators.required]],
-      ExchangeMarket: ['']
+      ticker: ['', Validators.required],
+      shares: [, [Validators.required]],
+      purchaseDate: [],
+      valueAtPurchase: [, [Validators.required]],
+      exchangeMarket: ['']
     })
 
     this.maxDate = new Date();

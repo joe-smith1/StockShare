@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Inject } from '@angular/core';
-import { inject } from '@angular/core/testing';
+import { Component, OnInit, Input } from '@angular/core';
+import { Stock } from '../_models/Stock';
 
 @Component({
   selector: 'app-stock-card',
@@ -8,12 +7,13 @@ import { inject } from '@angular/core/testing';
   styleUrls: ['./stock-card.component.css']
 })
 export class StockCardComponent implements OnInit {
+  @Input() stock: Stock;
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") baseUrl: string) {
-
+  constructor() {
   }
 
   ngOnInit(): void {
+    debugger;
   }
 
 }
