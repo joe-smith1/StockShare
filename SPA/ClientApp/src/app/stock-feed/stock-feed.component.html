@@ -1,5 +1,5 @@
 <div class="row justify-content-center" *ngIf="stocks.length !== 0">
-  <div class="col-7 mt-5" *ngFor="let stock of stocks">
+  <div class="col-md-3 row-md-3 mt-5" *ngFor="let stock of stocks">
     <app-stock-card [stock]="stock"></app-stock-card>
   </div>
 </div>

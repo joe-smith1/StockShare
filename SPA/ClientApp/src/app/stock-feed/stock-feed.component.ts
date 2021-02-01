@@ -16,7 +16,6 @@ export class StockFeedComponent implements OnInit {
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   ngOnInit(): void {
-    debugger;
     this.httpClient.get<Stock[]>(this.baseUrl + 'api/stockfeed/all')
       .subscribe(
         response => this.stocks = response,

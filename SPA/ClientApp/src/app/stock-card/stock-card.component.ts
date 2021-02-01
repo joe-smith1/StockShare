@@ -13,7 +13,6 @@ export class StockCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
   }
 
 }
