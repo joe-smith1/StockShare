@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,7 @@ namespace SPA.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("all-private")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<StockDto>>> GetAllPrivateStocksAsync()
         {
             var user = await _userManager.GetUserAsync(User);

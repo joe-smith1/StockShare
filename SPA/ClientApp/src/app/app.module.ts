@@ -46,10 +46,7 @@ import { PrivateStockFeedComponent } from './private-stock-feed/private-stock-fe
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
       { path: 'private-stock-feed', component: PrivateStockFeedComponent, canActivate: [AuthorizeGuard] },
-      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-      { path: 'stock-card', component: StockCardComponent, canActivate: [AuthorizeGuard] },
       { path: 'add-stock', component: AddStockComponent, canActivate: [AuthorizeGuard] },
       { path: 'update-stock', component: UpdateStockComponent, canActivate: [AuthorizeGuard] }
     ])
