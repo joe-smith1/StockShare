@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextInputComponent } from './_form-components/text-input/text-input.component';
 import { UpdateStockComponent } from './update-stock/update-stock.component';
 import { StockFeedComponent } from './stock-feed/stock-feed.component';
+import { PrivateStockFeedComponent } from './private-stock-feed/private-stock-feed.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { StockFeedComponent } from './stock-feed/stock-feed.component';
     TextInputComponent,
     UpdateStockComponent,
     StockFeedComponent,
+    PrivateStockFeedComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,8 +45,9 @@ import { StockFeedComponent } from './stock-feed/stock-feed.component';
     BsDatepickerModule.forRoot(),
     ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: StockFeedComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
+      { path: 'private-stock-feed', component: PrivateStockFeedComponent, canActivate: [AuthorizeGuard] },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'stock-card', component: StockCardComponent, canActivate: [AuthorizeGuard] },
       { path: 'add-stock', component: AddStockComponent, canActivate: [AuthorizeGuard] },

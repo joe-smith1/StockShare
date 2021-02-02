@@ -1,7 +1,8 @@
 import { template } from '@angular-devkit/schematics';
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { using } from 'rxjs';
+import { StockFeedService } from '../services/stock-feed/stock-feed.service';
 import { Stock } from '../_models/Stock';
 
 @Component({
@@ -10,17 +11,30 @@ import { Stock } from '../_models/Stock';
   styleUrls: ['./stock-feed.component.css']
 })
 export class StockFeedComponent implements OnInit {
+  @Input() publicStocks: boolean = true;
   stocks: Stock[] = [];
   failed: boolean = false;
+  loaded: boolean = false;
 
-  constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+
+  constructor(private stockFeedService: StockFeedService) { }
 
   ngOnInit(): void {
-    this.httpClient.get<Stock[]>(this.baseUrl + 'api/stockfeed/all')
-      .subscribe(
-        response => this.stocks = response,
-        error => this.failed = true
+    if (this.publicStocks) {
+      this.stockFeedService.getPublicStocks()
+        .subscribe(
+            response => {this.stocks = response; this.loaded = true;},
+            error => this.failed = true
+          );
+    }
+    else {
+      this.stockFeedService.getPrivateStocks()
+        .subscribe(
+          response => { this.stocks = response; this.loaded = true; },
+          error => this.failed = true
       );
+
+    }
   }
 
 }

@@ -1,6 +1,16 @@
-<div *ngIf="stock" class="card text-center">
-  <div class="card-body">
+<div *ngIf="stock" class="card text-center shadow-sm">
+  <div class="card-header">
     <h2 class="card-title">{{stock.ticker}}</h2>
-    <h4 class="card-subtitle">Shares: {{stock.shares}}</h4>
+  </div>
+  <div class="card-body">
+    <ul class="list-unstyled">
+      <li>Shares: {{stock.shares}}</li>
+      <li>{{stock.exchangeMarket}}</li>
+      <li *ngIf="stock.currentValue">Current: ${{stock.currentValue}}</li>
+      <li *ngIf="stock.valueAtPurchase">Purchase: ${{stock.valueAtPurchase}}</li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">{{stock.purchaseDate?.toLocaleDateString()}}</small>
   </div>
 </div>
