@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -99,11 +100,13 @@ namespace SPA.Controllers
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["Tradier:AccessToken"]);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringResponce = await httpClient.GetStringAsync(
-                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(stringResponce);
-            Console.ResetColor();
+            var quotes = (await JsonSerializer.DeserializeAsync<Root>(await httpClient.GetStreamAsync(
+                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false")))?.Quotes;
+
+            if (quotes == null)
+            {
+                return;
+            }
         }
     }
 }
