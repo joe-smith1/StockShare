@@ -27,6 +27,8 @@ namespace SPA.Extensions
 
             // Adding our auto mapper profiles as a service so can later use them through dependency injection.
             services.AddAutoMapper(typeof(AutoMapperOrganizationProfile));
+
+            services.AddHttpClient();
             return services;
         }
     }
