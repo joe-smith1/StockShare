@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SPA.Data;
 using SPA.Helpers;
+using SPA.Services;
 
 namespace SPA.Extensions
 {
@@ -28,7 +29,11 @@ namespace SPA.Extensions
             // Adding our auto mapper profiles as a service so can later use them through dependency injection.
             services.AddAutoMapper(typeof(AutoMapperOrganizationProfile));
 
+            // Adding HttpClient so we can inject IHttpClientFactory throughout our application preventing socket exhaustion.
             services.AddHttpClient();
+
+            services.AddScoped<ITradierService, TradierService>();
+
             return services;
         }
     }
