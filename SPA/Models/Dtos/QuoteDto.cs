@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using SPA.Helpers;
 
 
 namespace SPA.Models.Dtos
@@ -12,86 +13,86 @@ namespace SPA.Models.Dtos
     /// </summary>
     public class Quote
     {
-        [JsonPropertyName("symbol")]
+        [JsonProperty("symbol")]
         public string Symbol { get; set; }
 
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonPropertyName("exch")]
+        [JsonProperty("exch")]
         public string ExchangeCode { get; set; }
 
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonPropertyName("last")]
+        [JsonProperty("last")]
         public decimal Last { get; set; }
 
-        [JsonPropertyName("change")]
+        [JsonProperty("change")]
         public decimal Change { get; set; }
 
-        [JsonPropertyName("volume")]
+        [JsonProperty("volume")]
         public int Volume { get; set; }
 
-        [JsonPropertyName("open")]
-        public decimal Open { get; set; }
+        [JsonProperty("open")]
+        public decimal? Open { get; set; }
 
-        [JsonPropertyName("high")]
-        public decimal High { get; set; }
+        [JsonProperty("high")]
+        public decimal? High { get; set; }
 
-        [JsonPropertyName("low")]
-        public decimal Low { get; set; }
+        [JsonProperty("low")]
+        public decimal? Low { get; set; }
 
-        [JsonPropertyName("close")]
-        public decimal Close { get; set; }
+        [JsonProperty("close")]
+        public decimal? Close { get; set; }
 
-        [JsonPropertyName("bid")]
+        [JsonProperty("bid")]
         public decimal Bid { get; set; }
 
-        [JsonPropertyName("ask")]
+        [JsonProperty("ask")]
         public decimal Ask { get; set; }
 
-        [JsonPropertyName("change_percentage")]
+        [JsonProperty("change_percentage")]
         public decimal ChangePercentage { get; set; }
 
-        [JsonPropertyName("average_volume")]
+        [JsonProperty("average_volume")]
         public int AverageVolume { get; set; }
 
-        [JsonPropertyName("last_volume")]
+        [JsonProperty("last_volume")]
         public decimal LastVolume { get; set; }
 
         // TODO convert to DateTime using a jsonConverter.
-        [JsonPropertyName("trade_date")]
+        [JsonProperty("trade_date")]
         public long TradeDate { get; set; }
 
-        [JsonPropertyName("prevclose")]
+        [JsonProperty("prevclose")]
         public decimal PrevClose { get; set; }
 
-        [JsonPropertyName("week_52_high")]
+        [JsonProperty("week_52_high")]
         public decimal Week52High { get; set; }
 
-        [JsonPropertyName("week_52_low")]
+        [JsonProperty("week_52_low")]
         public decimal Week52Low { get; set; }
 
-        [JsonPropertyName("bidsize")]
+        [JsonProperty("bidsize")]
         public int BidSize { get; set; }
 
-        [JsonPropertyName("bidexch")]
+        [JsonProperty("bidexch")]
         public string BidExchangeCode { get; set; }
 
-        [JsonPropertyName("bid_date")]
+        [JsonProperty("bid_date")]
         public long BidDate { get; set; }
 
-        [JsonPropertyName("asksize")]
+        [JsonProperty("asksize")]
         public int AskSize { get; set; }
 
-        [JsonPropertyName("askexch")]
+        [JsonProperty("askexch")]
         public string AskExchangeCode { get; set; }
 
-        [JsonPropertyName("ask_date")]
+        [JsonProperty("ask_date")]
         public long AskDate { get; set; }
 
-        [JsonPropertyName("root_symbols")]
+        [JsonProperty("root_symbols")]
         public string RootSymbols { get; set; }
     }
 
@@ -101,7 +102,8 @@ namespace SPA.Models.Dtos
     /// </summary>
     public class UnmatchedSymbols
     {
-        [JsonPropertyName("symbol")]
+        [JsonProperty("symbol")]
+        [JsonConverter(typeof(SingleToListConverter<string>))]
         public List<string> Symbol { get; set; }
     }
 
@@ -111,10 +113,11 @@ namespace SPA.Models.Dtos
     /// </summary>
     public class Quotes
     {
-        [JsonPropertyName("quote")]
+        [JsonProperty("quote")]
+        [JsonConverter(typeof(SingleToListConverter<Quote>))]
         public List<Quote> Quote { get; set; }
 
-        [JsonPropertyName("unmatched_symbols")]
+        [JsonProperty("unmatched_symbols")]
         public UnmatchedSymbols UnmatchedSymbols { get; set; }
     }
 
@@ -124,7 +127,7 @@ namespace SPA.Models.Dtos
     /// </summary>
     public class Root
     {
-        [JsonPropertyName("quotes")]
+        [JsonProperty("quotes")]
         public Quotes Quotes { get; set; }
     }
 

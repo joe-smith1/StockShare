@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
+using IdentityServer4.Extensions;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SPA.Models.Dtos;
 
 namespace SPA.Services
@@ -24,6 +27,11 @@ namespace SPA.Services
         /// <inheritdoc/>
         public async Task GetQuotes(IEnumerable<StockDto> stocks)
         {
+            if (stocks.IsNullOrEmpty())
+            {
+                return;
+            }
+
             StringBuilder tickers = new StringBuilder();
             foreach (var stock in stocks)
             {
@@ -31,15 +39,23 @@ namespace SPA.Services
                 tickers.Append(',');
             }
 
+            // Removing the trailing comma;
+            tickers.Remove(tickers.Length - 1, 1);
+
             using var httpClient = _httpClientFactory.CreateClient("tradierGetQuote");
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["Tradier:AccessToken"]);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var stringRep = await httpClient.GetStringAsync(
+                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false");
+            Console.WriteLine(stringRep);
 
-            var quotes = (await JsonSerializer.DeserializeAsync<Root>(await httpClient.GetStreamAsync(
-                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false")))?.Quotes;
+            var jsonRoot = JsonConvert.DeserializeObject<Root>(await httpClient.GetStringAsync(
+                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false"));
 
-            if (quotes == null)
+            var quotes = jsonRoot?.Quotes;
+
+            if (quotes == null || quotes.Quote == null)
             {
                 return;
             }
