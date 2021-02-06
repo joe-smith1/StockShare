@@ -20,7 +20,7 @@ export class AddStockComponent implements OnInit {
 
   ngOnInit() {
     this.stockAddForm = this.fb.group({
-      ticker: ['', Validators.required],
+      symbol: ['', Validators.required],
       shares: [, [Validators.required]],
       purchaseDate: [],
       valueAtPurchase: [, [Validators.required]],

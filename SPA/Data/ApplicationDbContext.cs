@@ -45,7 +45,7 @@ namespace SPA.Data
 
             builder.Entity<Stock>(b =>
             {
-                b.Property(s => s.Ticker)
+                b.Property(s => s.Symbol)
                     .IsRequired();
 
                 b.HasOne(s => s.User)

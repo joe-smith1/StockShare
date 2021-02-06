@@ -13,9 +13,9 @@ namespace SPA.Models.Dtos
         public Guid Id { get; set; }
 
         /// <summary>
-        /// The Ticker of the stock e.g TSLA.
+        /// The Symbol of the stock e.g TSLA.
         /// </summary>
-        public string Ticker { get; set; }
+        public string Symbol { get; set; }
 
         /// <summary>
         /// Number of shares of this stock that were purchased.

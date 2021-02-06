@@ -9,8 +9,8 @@ using SPA.Data;
 namespace DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210122230111_StocksTable")]
-    partial class StocksTable
+    [Migration("20210206053818_TickerToSymbol")]
+    partial class TickerToSymbol
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -278,7 +278,7 @@ namespace DataMigrations
                     b.Property<string>("FavoriteMarket")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("FavoriteStockId")
+                    b.Property<string>("FavoriteStockSymbol")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("InvestmentOrientation")
@@ -339,8 +339,6 @@ namespace DataMigrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FavoriteStockId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -452,15 +450,6 @@ namespace DataMigrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SPA.Models.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("SPA.Models.Entities.Stock", "FavoriteStock")
-                        .WithMany()
-                        .HasForeignKey("FavoriteStockId");
-
-                    b.Navigation("FavoriteStock");
                 });
 
             modelBuilder.Entity("SPA.Models.Entities.Stock", b =>

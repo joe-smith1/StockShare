@@ -1,8 +1,8 @@
 <form [formGroup]="stockUpdateForm" (ngSubmit)="stockUpdateForm.valid && updateStock()" autocomplete="off">
   <h4>Stock Id FOR TESTING:</h4>
   <app-text-input [label]="'Id'" [formControl]="stockUpdateForm.controls['id']"></app-text-input>
-  <h4>Ticker:</h4>
-  <app-text-input [label]='"Ticker"' [formControl]='stockUpdateForm.controls["ticker"]'></app-text-input>
+  <h4>Symbol:</h4>
+  <app-text-input [label]='"Symbol"' [formControl]='stockUpdateForm.controls["symbol"]'></app-text-input>
   <h4 class="mt-2">Shares:</h4>
   <app-text-input [label]='"Shares"' [formControl]='stockUpdateForm.controls["shares"]' [type]='"number"'>
   </app-text-input>

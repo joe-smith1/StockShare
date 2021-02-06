@@ -16,10 +16,10 @@ namespace SPA.Models.Entities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// The Ticker of the stock e.g TSLA
+        /// The Symbol of the stock e.g TSLA
         /// Is a required property of the entity.
         /// </summary>
-        public string Ticker { get; set; }
+        public string Symbol { get; set; }
 
         /// <summary>
         /// The number of shares of this stock that were purchased.

@@ -379,7 +379,7 @@ namespace DataMigrations
                     b.Property<decimal>("Shares")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Ticker")
+                    b.Property<string>("Symbol")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

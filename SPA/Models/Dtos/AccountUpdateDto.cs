@@ -50,6 +50,6 @@ namespace SPA.Models.Dtos
         /// Name of the favorite Stock of the user.
         /// </summary>
         [Display(Name = "Favorite stock")]
-        public string FavoriteStockTicker { get; set; }
+        public string FavoriteStockSymbol { get; set; }
     }
 }

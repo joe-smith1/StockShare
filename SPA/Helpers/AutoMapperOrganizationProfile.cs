@@ -21,20 +21,12 @@ namespace SPA.Helpers
             CreateMap<RegisterDto, ApplicationUser>();
             CreateMap<ApplicationUser, AccountUpdateDto>();
 
-
-            // TODO research better way of doing this its very repetitive.
             CreateMap<AccountUpdateDto, ApplicationUser>()
                 .ForMember(dest => dest.UserName,
                     options => options.MapFrom((src, dest) => src.UserName ?? dest.UserName));
-            //.ForMember(dest => dest.PhoneNumber, options => options.MapFrom((src, dest) => src.PhoneNumber ?? dest.PhoneNumber))
-            //.ForMember(dest => dest.FavoriteMarket, options => options.MapFrom((src, dest) => src.FavoriteMarket ?? dest.FavoriteMarket))
-            //.ForMember(dest => dest.InvestmentOrientation, options => options.MapFrom((src, dest) => src.InvestmentOrientation ?? dest.InvestmentOrientation))
-            //.ForMember(dest => dest.ProfileDescription, options => options.MapFrom((src, dest) => src.ProfileDescription ?? dest.ProfileDescription))
-            //.ForMember(dest => dest.FavoriteStockTicker, options => options.MapFrom((src, dest) => src.FavoriteStockTicker ?? dest.FavoriteStockTicker));
 
 
             // Stock Mappings.
-
             // Mapping the PurchaseDate of our stock entity to UTC Now if the dtos date is null.
             CreateMap<StockCreationDto, Stock>()
                 .ForMember(dest => dest.PurchaseDate, options => options.MapFrom(src => src.PurchaseDate ?? DateTime.UtcNow));
@@ -43,8 +35,8 @@ namespace SPA.Helpers
             // properties if no change is provided in the dto e.g empty or null.
             CreateMap<StockUpdateDto, Stock>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.Ticker,
-                    options => options.MapFrom((src, dest) => string.IsNullOrWhiteSpace(src.Ticker) ? dest.Ticker : src.Ticker))
+                .ForMember(dest => dest.Symbol,
+                    options => options.MapFrom((src, dest) => string.IsNullOrWhiteSpace(src.Symbol) ? dest.Symbol : src.Symbol))
                 .ForMember(dest => dest.Shares,
                     options => options.MapFrom((src, dest) => src.Shares ?? dest.Shares))
                 .ForMember(dest => dest.PurchaseDate,

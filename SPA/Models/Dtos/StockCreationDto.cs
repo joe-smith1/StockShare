@@ -12,11 +12,11 @@ namespace SPA.Models.Dtos
     {
 
         /// <summary>
-        /// The Ticker of the stock e.g TSLA.
+        /// The Symbol of the stock e.g TSLA.
         /// Is a required property.
         /// </summary>
         [Required]
-        public string Ticker { get; set; }
+        public string Symbol { get; set; }
 
         /// <summary>
         /// The number of shares bought for this stock.

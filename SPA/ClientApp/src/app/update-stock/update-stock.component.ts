@@ -20,7 +20,7 @@ export class UpdateStockComponent implements OnInit {
   ngOnInit(): void {
     this.stockUpdateForm = this.fb.group({
         id: ['', [Validators.required]],
-        ticker: [''],
+        symbol: [''],
         shares: [],
         purchaseDate: [],
         valueAtPurchase: [],

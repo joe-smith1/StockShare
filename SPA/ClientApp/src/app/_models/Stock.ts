@@ -1,7 +1,7 @@
 export interface Stock {
   id: string,
 
-  ticker: string,
+  symbol: string,
 
   shares: number,
 

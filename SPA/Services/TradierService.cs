@@ -35,7 +35,7 @@ namespace SPA.Services
             StringBuilder tickers = new StringBuilder();
             foreach (var stock in stocks)
             {
-                tickers.Append(stock.Ticker);
+                tickers.Append(stock.Symbol);
                 tickers.Append(',');
             }
 
@@ -64,7 +64,7 @@ namespace SPA.Services
             {
                 // Our Linq select statement doesn't create a new object only updates the existing objects property
                 // so no need to store the result as it uses a pointer to the same object in our stocks list.
-                stocks.Where(s => s.Ticker == quote.Symbol)
+                stocks.Where(s => s.Symbol == quote.Symbol)
                     .Select(s => s.CurrentValue = quote.Last).ToList();     // ToList is required to execute the LINQ statement.
             }
         }

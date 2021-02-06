@@ -276,7 +276,7 @@ namespace DataMigrations
                     b.Property<string>("FavoriteMarket")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FavoriteStockTicker")
+                    b.Property<string>("FavoriteStockSymbol")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("InvestmentOrientation")
@@ -375,7 +375,7 @@ namespace DataMigrations
                     b.Property<decimal>("Shares")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Ticker")
+                    b.Property<string>("Symbol")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

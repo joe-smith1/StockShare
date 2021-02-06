@@ -1,6 +1,6 @@
 <form [formGroup]="stockAddForm" (ngSubmit)="stockAddForm.valid && addStock()" autocomplete="off">
-  <h4>Ticker:</h4>
-  <app-text-input [label]='"Ticker"' [formControl]='stockAddForm.controls["ticker"]'></app-text-input>
+  <h4>Symbol:</h4>
+  <app-text-input [label]='"Symbol"' [formControl]='stockAddForm.controls["symbol"]'></app-text-input>
   <h4 class="mt-2">Shares:</h4>
   <app-text-input [label]='"Shares"' [formControl]='stockAddForm.controls["shares"]' [type]='"number"'></app-text-input>
   <h4 class="mt-2">Purchase Date:</h4>

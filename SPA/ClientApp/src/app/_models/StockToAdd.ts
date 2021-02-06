@@ -1,5 +1,5 @@
 export interface StockToAdd {
-  ticker: string,
+  symbol: string,
   shares: number,
   purchaseDate: Date,
   valueAtPurchase: number,

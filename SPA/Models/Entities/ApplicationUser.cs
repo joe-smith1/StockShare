@@ -66,7 +66,7 @@ namespace SPA.Models.Entities
         /// <summary>
         /// Name of the favorite Stock of the user.
         /// </summary>
-        public string? FavoriteStockTicker { get; set; }
+        public string? FavoriteStockSymbol { get; set; }
 
 
         // Navigational entity relationships.
