@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SPA.Data;
 using SPA.Helpers;
 using SPA.Services;
+using SPA.Interfaces;
 
 namespace SPA.Extensions
 {
@@ -32,6 +33,7 @@ namespace SPA.Extensions
             // Adding HttpClient so we can inject IHttpClientFactory throughout our application preventing socket exhaustion.
             services.AddHttpClient();
 
+            // Adding our TradierService for dependency injection through our application scoped to the current http request.
             services.AddScoped<ITradierService, TradierService>();
 
             return services;

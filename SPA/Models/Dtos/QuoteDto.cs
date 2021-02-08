@@ -98,7 +98,7 @@ namespace SPA.Models.Dtos
 
     /// <summary>
     /// Represents the UnmatchedSymbol object from Tradiers API QUOTE request.
-    /// Stores the symbols aka ticker of the stocks requested that couldn't be found by Tradier.
+    /// Stores the symbols of the stocks requested that couldn't be found by Tradier.
     /// </summary>
     public class UnmatchedSymbols
     {

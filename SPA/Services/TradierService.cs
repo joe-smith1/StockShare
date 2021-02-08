@@ -8,14 +8,32 @@ using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using SPA.Interfaces;
 using SPA.Models.Dtos;
 
 namespace SPA.Services
 {
+    /// <summary>
+    /// <inheritdoc cref="ITradierService"/>
+    /// <br/>
+    /// <br/>
+    /// Currently the only implemented methods are to get the quotes for the provided stocks
+    /// and updated their CurrentValue from the APIs response with the latest stock price.
+    /// </summary>
     public class TradierService : ITradierService
     {
+
+        // Properties from dependency injection
+
+        /// <summary>
+        /// HTTP Factory used for creating HTTP contexts for our requests while not exhausting
+        /// sockets.
+        /// </summary>
         private readonly IHttpClientFactory _httpClientFactory;
+
+        /// <summary>
+        /// Configuration of the application to get the Tradier Key from our environment.
+        /// </summary>
         private readonly IConfiguration _config;
 
         public TradierService(IHttpClientFactory httpClientFactory, IConfiguration config)
@@ -27,42 +45,46 @@ namespace SPA.Services
         /// <inheritdoc/>
         public async Task GetQuotes(IEnumerable<StockDto> stocks)
         {
+            // No stocks to return so can't update their properties.
             if (stocks.IsNullOrEmpty())
             {
                 return;
             }
 
-            StringBuilder tickers = new StringBuilder();
+            // Building the query string of symbols from the stocks to get quotes for.
+            StringBuilder symbols = new StringBuilder();
             foreach (var stock in stocks)
             {
-                tickers.Append(stock.Symbol);
-                tickers.Append(',');
+                symbols.Append(stock.Symbol);
+                symbols.Append(',');
             }
 
-            // Removing the trailing comma;
-            tickers.Remove(tickers.Length - 1, 1);
+            // Removing the trailing comma.
+            symbols.Remove(symbols.Length - 1, 1);
 
-            using var httpClient = _httpClientFactory.CreateClient("tradierGetQuote");
 
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["Tradier:AccessToken"]);
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var stringRep = await httpClient.GetStringAsync(
-                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false");
-            Console.WriteLine(stringRep);
+            // Creating Client for tradier request along with headers for authentication and media type of JSON.
+            var httpClient = _httpClientFactory.CreateClient("tradierGetQuote");
+            httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", _config["Tradier:AccessToken"]);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
 
             var jsonRoot = JsonConvert.DeserializeObject<Root>(await httpClient.GetStringAsync(
-                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={tickers}&greeks=false"));
+                $"https://sandbox.tradier.com/v1/markets/quotes?symbols={symbols}&greeks=false"));
+
 
             var quotes = jsonRoot?.Quotes;
 
-            if (quotes == null || quotes.Quote == null)
+            if (quotes?.Quote == null)
             {
                 return;
             }
 
             foreach (var quote in quotes.Quote)
             {
-                // Our Linq select statement doesn't create a new object only updates the existing objects property
+                // Our Linq select statement doesn't create a new object only updates the existing objects CurrentValue property
                 // so no need to store the result as it uses a pointer to the same object in our stocks list.
                 stocks.Where(s => s.Symbol == quote.Symbol)
                     .Select(s => s.CurrentValue = quote.Last).ToList();     // ToList is required to execute the LINQ statement.
