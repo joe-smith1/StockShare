@@ -48,6 +48,8 @@ namespace SPA
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +57,14 @@ namespace SPA
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+
+                // Enabling swagger middleware for serving swagger json setting up a swaggerEndpoint to display this.
+                app.UseSwaggerUI(config =>
+                {
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "StockShare Api V1");
+                });
+
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
