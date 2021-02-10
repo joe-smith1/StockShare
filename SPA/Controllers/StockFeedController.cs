@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SPA.Data;
+using SPA.Helpers;
 using SPA.Models.Dtos;
 using SPA.Models.Entities;
 using SPA.Interfaces;
+using SPA.Models.Dtos.Filters;
+using SPA.Models.Wrappers;
 
 namespace SPA.Controllers
 {
@@ -68,7 +71,7 @@ namespace SPA.Controllers
         /// valid stockDto to be returned.</remarks>
         [HttpGet]
         [Route("all-public")]
-        public async Task<ActionResult<IEnumerable<StockDto>>> GetAllPublicStocksAsync()
+        public async Task<ActionResult<IEnumerable<StockDto>>> GetAllPublicStocksAsync([FromQuery] PaginationFilter paginationFilter)
         {
             var stocks = await _context.Stocks
                 .Include(s => s.User)
