@@ -63,44 +63,57 @@ namespace SPA.Controllers
 
 
         /// <summary>
-        /// Gets all the public stocks from our Stocks table in the database.
+        /// Gets the public stocks from our Stocks table in the database for the given page and size.
         /// A public stock is a stock who's User that created it is public.
         /// </summary>
-        /// <returns>A Enumerable collection of all public stocks projected to StockDtos.</returns>
+        /// <param name="paginationFilter">
+        /// Pagination details for the current page and the size of the page aka how many stockDtos to return.
+        /// </param>
+        /// <returns>A PagedList of the public stocks for the requested page projected to StockDtos.</returns>
         /// <remarks>Currently the Tradier service updates the current price of each
         /// valid stockDto to be returned.</remarks>
         [HttpGet]
         [Route("all-public")]
-        public async Task<ActionResult<IEnumerable<StockDto>>> GetAllPublicStocksAsync([FromQuery] PaginationFilter paginationFilter)
+        public async Task<ActionResult<PagedResponse<PagedList<StockDto>>>> GetAllPublicStocksAsync([FromQuery] PaginationFilter paginationFilter)
         {
-            var stocks = await _context.Stocks
+            var stocksQuery = _context.Stocks
                 .Include(s => s.User)
                 .Where(s => !s.User.PrivateAccount)
-                .ProjectTo<StockDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-            await _tradierService.GetQuotes(stocks);
-            return Ok(stocks);
+                .ProjectTo<StockDto>(_mapper.ConfigurationProvider);
+
+            var stockList = await PagedList<StockDto>.CreateAsync(stocksQuery,
+                paginationFilter.PageNumber, paginationFilter.PageSize);
+
+            await _tradierService.GetQuotes(stockList);
+
+            return Ok(new PagedResponse<PagedList<StockDto>>(stockList));
         }
 
         /// <summary>
-        /// Gets all the stocks for the currently logged in user.
+        /// Gets the current logged in users stocks from the database for the given page and size.
         /// </summary>
-        /// <returns>A Enumerable collection of the users Stocks as StockDtos.</returns>
+        /// <param name="paginationFilter">
+        /// Pagination details for the current page and the size of the page aka how many stockDtos to return.
+        /// </param>
+        /// <returns>A <see cref="PagedList{T}"/> of the users Stocks as StockDtos.</returns>
         /// <remarks>Currently the Tradier service updates the current price of each
         /// valid stockDto to be returned.</remarks>
         [HttpGet]
         [Route("all-private")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<StockDto>>> GetAllPrivateStocksAsync()
+        public async Task<ActionResult<PagedResponse<PagedList<StockDto>>>> GetAllPrivateStocksAsync([FromQuery] PaginationFilter paginationFilter)
         {
             var user = await _userManager.GetUserAsync(User);
-            var stocks = await _context.Stocks
+            var stocksQuery = _context.Stocks
                 .Include(s => s.User)
                 .Where(s => s.User == user)
-                .ProjectTo<StockDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-            await _tradierService.GetQuotes(stocks);
-            return Ok(stocks);
+                .ProjectTo<StockDto>(_mapper.ConfigurationProvider);
+
+            var stockList = await PagedList<StockDto>.CreateAsync(stocksQuery, paginationFilter.PageNumber,
+                paginationFilter.PageSize);
+
+            await _tradierService.GetQuotes(stockList);
+            return Ok(new PagedResponse<PagedList<StockDto>>(stockList));
         }
     }
 }

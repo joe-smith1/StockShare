@@ -33,6 +33,10 @@ namespace SPA.Models.Dtos.Filters
                 {
                     _pageSize = MaxPageSize;
                 }
+                else
+                {
+                    _pageSize = value;
+                }
             }
         }
 

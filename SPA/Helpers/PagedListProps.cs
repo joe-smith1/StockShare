@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SPA.Interfaces;
 
 namespace SPA.Helpers
 {
@@ -13,7 +14,7 @@ namespace SPA.Helpers
     /// Must be created using the factory method <see cref="CreateAsync"/>.
     /// </summary>
     /// <typeparam name="T">The type of the item you wish to paginate.</typeparam>
-    public class PagedList<T> : List<T>
+    public class PagedList<T> : List<T>, IPagedProps
     {
         /// <summary>
         /// Private constructor as the PagedList should only be created through its factory method <see cref="CreateAsync"/>.
@@ -35,27 +36,16 @@ namespace SPA.Helpers
             AddRange(items);
         }
 
-        /// <summary>
-        /// The current page that the collection is for aka
-        /// the items stored in the list are for this page.
-        /// </summary>
+        /// <inheritdoc/>
         public int CurrentPage { get; set; }
 
-        /// <summary>
-        /// Total number of pages calculated from
-        /// <see cref="TotalItems"/> and <see cref="PageSize"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public int TotalPages { get; set; }
 
-        /// <summary>
-        /// How many items are on each page.
-        /// </summary>
+        /// <inheritdoc/>
         public int PageSize { get; set; }
 
-        /// <summary>
-        /// The total size of the query used to create the pagination request
-        /// e.g all the public stocks.
-        /// </summary>
+        /// <inheritdoc/>
         public int TotalItems { get; set; }
 
 

@@ -1,26 +1,30 @@
 ﻿using System;
+using SPA.Helpers;
+using SPA.Interfaces;
 
 namespace SPA.Models.Wrappers
 {
     /// <summary>
-    /// Response wrapper used for returning paginated items of type <see cref="T"/>.
-    /// Provides properties required for pagination e.g PageNumber PageSize TotalItems etc.
+    /// Response wrapper used for returning paginated items of type <see cref="T"/> that implement
+    /// <see cref="IPagedProps"/>.
+    /// Provides properties required for pagination e.g PageNumber PageSize TotalItems
+    /// these are set from the underlying data as that implements <see cref="IPagedProps"/>.
     /// </summary>
     /// <typeparam name="T">The type of paginated data to be returned in response.</typeparam>
-    public class PagedResponse<T> : Response<T>
+    public class PagedResponse<T> : Response<T> where T : IPagedProps
     {
         /// <summary>
         /// Creates a wrapper to return the paginated data in the response with pagination
         /// properties.
         /// </summary>
         /// <param name="data">The underlying paginated items to return.</param>
-        /// <param name="pageNumber">The current page of items being returned.</param>
-        /// <param name="pageSize">The number of paginated items on the page.</param>
-        public PagedResponse(T data, int pageNumber, int pageSize)
+        public PagedResponse(T data)
         {
-            PageNumber = pageNumber;
+            PageNumber = data.CurrentPage;
             Data = data;
-            PageSize = pageSize;
+            PageSize = data.PageSize;
+            TotalPages = data.TotalPages;
+            TotalItems = data.TotalItems;
         }
 
         /// <summary>
