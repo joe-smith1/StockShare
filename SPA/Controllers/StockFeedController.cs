@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SPA.Data;
+using SPA.Extensions;
 using SPA.Helpers;
 using SPA.Models.Dtos;
 using SPA.Models.Entities;
@@ -67,9 +67,9 @@ namespace SPA.Controllers
         /// A public stock is a stock who's User that created it is public.
         /// </summary>
         /// <param name="paginationFilter">
-        /// Pagination details for the current page and the size of the page aka how many stockDtos to return.
+        /// Pagination details for the current page and the size of the page aka how many stocks to return.
         /// </param>
-        /// <returns>A PagedList of the public stocks for the requested page projected to StockDtos.</returns>
+        /// <returns>A <see cref="PagedList{T}"/> of the public stocks for the requested page projected to <see cref="StockDto"/>.</returns>
         /// <remarks>Currently the Tradier service updates the current price of each
         /// valid stockDto to be returned.</remarks>
         [HttpGet]
@@ -84,7 +84,14 @@ namespace SPA.Controllers
             var stockList = await PagedList<StockDto>.CreateAsync(stocksQuery,
                 paginationFilter.PageNumber, paginationFilter.PageSize);
 
+            Response.AddPaginationHeaders(stockList);
+
             await _tradierService.GetQuotes(stockList);
+
+            if (!paginationFilter.PaginationWrapper)
+            {
+                return Ok(stockList);
+            }
 
             return Ok(new PagedResponse<PagedList<StockDto>>(stockList));
         }
@@ -93,9 +100,9 @@ namespace SPA.Controllers
         /// Gets the current logged in users stocks from the database for the given page and size.
         /// </summary>
         /// <param name="paginationFilter">
-        /// Pagination details for the current page and the size of the page aka how many stockDtos to return.
+        /// Pagination details for the current page and the size of the page aka how many stocks to return.
         /// </param>
-        /// <returns>A <see cref="PagedList{T}"/> of the users Stocks as StockDtos.</returns>
+        /// <returns>A <see cref="PagedList{T}"/> of the users Stocks as <see cref="StockDto"/>.</returns>
         /// <remarks>Currently the Tradier service updates the current price of each
         /// valid stockDto to be returned.</remarks>
         [HttpGet]
@@ -112,7 +119,15 @@ namespace SPA.Controllers
             var stockList = await PagedList<StockDto>.CreateAsync(stocksQuery, paginationFilter.PageNumber,
                 paginationFilter.PageSize);
 
+            Response.AddPaginationHeaders(stockList);
+
             await _tradierService.GetQuotes(stockList);
+
+            if (!paginationFilter.PaginationWrapper)
+            {
+                return Ok(stockList);
+            }
+
             return Ok(new PagedResponse<PagedList<StockDto>>(stockList));
         }
     }

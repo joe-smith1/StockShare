@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using SPA.Models.Wrappers;
 
 namespace SPA.Models.Dtos.Filters
 {
@@ -50,5 +50,20 @@ namespace SPA.Models.Dtos.Filters
 
             set => _pageNumber = (value < 1) ? 1 : value;
         }
+
+
+        /// <summary>
+        /// Property used in the query string to tell the API weather to only
+        /// return the pagination properties through the header or to wrap the pagination
+        /// in a <see cref="PagedResponse{T}"/> as well as returning the pagination properties like
+        /// TotalPages through the headers of the response. This allows the client to decide what
+        /// type of response they want to receive.
+        /// </summary>
+        /// <remarks>
+        /// This defaults to false if no value is provided in the query string which results in
+        /// the pagination properties only being returned in response headers but the pagination
+        /// data is still returned in the body.
+        /// </remarks>
+        public bool PaginationWrapper { get; set; }
     }
 }
