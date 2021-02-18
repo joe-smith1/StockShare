@@ -21,6 +21,7 @@ import { TextInputComponent } from './_form-components/text-input/text-input.com
 import { UpdateStockComponent } from './update-stock/update-stock.component';
 import { StockFeedComponent } from './stock-feed/stock-feed.component';
 import { PrivateStockFeedComponent } from './private-stock-feed/private-stock-feed.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,8 @@ import { PrivateStockFeedComponent } from './private-stock-feed/private-stock-fe
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     ApiAuthorizationModule,
+    PaginationModule.forRoot(),
+
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'private-stock-feed', component: PrivateStockFeedComponent, canActivate: [AuthorizeGuard] },

@@ -7,7 +7,7 @@ namespace SPA.Models.Wrappers
     /// <summary>
     /// Response wrapper used for returning paginated items of type <see cref="T"/> that implement
     /// <see cref="IPagedProps"/>.
-    /// Provides properties required for pagination e.g PageNumber PageSize TotalItems
+    /// Provides properties required for pagination e.g CurrentPage PageSize TotalItems
     /// these are set from the underlying data as that implements <see cref="IPagedProps"/>.
     /// </summary>
     /// <typeparam name="T">The type of paginated data to be returned in response.</typeparam>
@@ -20,7 +20,7 @@ namespace SPA.Models.Wrappers
         /// <param name="data">The underlying paginated items to return.</param>
         public PagedResponse(T data)
         {
-            PageNumber = data.CurrentPage;
+            CurrentPage = data.CurrentPage;
             Data = data;
             PageSize = data.PageSize;
             TotalPages = data.TotalPages;
@@ -30,7 +30,7 @@ namespace SPA.Models.Wrappers
         /// <summary>
         /// The number of the current page being returned.
         /// </summary>
-        public int PageNumber { get; set; }
+        public int CurrentPage { get; set; }
 
         /// <summary>
         /// The number of items on the page.
