@@ -1,18 +1,16 @@
-<div class="card-deck justify-content-center" *ngIf="stocks.length !== 0">
-  <div class="mt-5" *ngFor="let stock of stocks">
+<div class="card-deck justify-content-center" *ngIf="stocks.data.length !== 0">
+  <div class="mt-5" *ngFor="let stock of stocks.data">
     <app-stock-card [stock]="stock"></app-stock-card>
   </div>
-
-  <div class="d-flex justify-content-center">
-    <pagination>
-
-    </pagination>
-
-  </div>
+</div>
+<div class="d-flex justify-content-center mt-5">
+  <pagination [totalItems]="stocks.headers.totalItems" [itemsPerPage]="stocks.headers.pageSize"
+    [(ngModel)]="stocks.headers.currentPage" (pageChanged)="pageChanged($event)">
+  </pagination>
 </div>
 
 <div class="row justify-content-center">
   <button routerLinkActive [routerLink]="['/add-stock']" routerLinkActive="router-link-active" class="btn btn-primary"
-    *ngIf="stocks.length === 0 && loaded">No Stocks Available Add One :)</button>
+    *ngIf="stocks.data.length === 0 && loaded">No Stocks Available Add One :)</button>
   <p *ngIf="failed">Failed to get stock feed :(</p>
 </div>

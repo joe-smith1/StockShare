@@ -1,6 +1,7 @@
 import { template } from '@angular-devkit/schematics';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, Input, OnInit } from '@angular/core';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { using } from 'rxjs';
 import { StockFeedService } from '../services/stock-feed/stock-feed.service';
 import { PaginatedList } from '../_models/PaginatedList';
@@ -25,15 +26,19 @@ export class StockFeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadStocks();
+  }
+
+  loadStocks() {
     if (this.publicStocks) {
-      this.stockFeedService.getPublicStocks()
+      this.stockFeedService.getPublicStocks(this.stockParams)
         .subscribe(
             response => {this.stocks = response; this.loaded = true;},
             error => this.failed = true
           );
     }
     else {
-      this.stockFeedService.getPrivateStocks()
+      this.stockFeedService.getPrivateStocks(this.stockParams)
         .subscribe(
           response => { this.stocks = response; this.loaded = true; },
           error => this.failed = true
@@ -42,7 +47,9 @@ export class StockFeedComponent implements OnInit {
     }
   }
 
-
-  pageChanged()
+  pageChanged(event: PageChangedEvent) {
+    this.stockParams.pageNumber = event.page;
+    this.loadStocks();
+  }
 
 }
