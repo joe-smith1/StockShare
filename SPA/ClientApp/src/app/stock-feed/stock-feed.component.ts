@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { using } from 'rxjs';
 import { StockFeedService } from '../services/stock-feed/stock-feed.service';
+import { PaginatedList } from '../_models/PaginatedList';
 import { Stock } from '../_models/Stock';
+import { StockParams } from '../_models/StockParams';
 
 @Component({
   selector: 'app-stock-feed',
@@ -12,12 +14,15 @@ import { Stock } from '../_models/Stock';
 })
 export class StockFeedComponent implements OnInit {
   @Input() publicStocks: boolean = true;
-  stocks: Stock[] = [];
+  stocks: PaginatedList<Stock>;
+  stockParams: StockParams;
   failed: boolean = false;
   loaded: boolean = false;
 
 
-  constructor(private stockFeedService: StockFeedService) { }
+  constructor(private stockFeedService: StockFeedService) {
+    this.stockParams = new StockParams();
+  }
 
   ngOnInit(): void {
     if (this.publicStocks) {
@@ -36,5 +41,8 @@ export class StockFeedComponent implements OnInit {
 
     }
   }
+
+
+  pageChanged()
 
 }
