@@ -22,6 +22,7 @@ import { UpdateStockComponent } from './update-stock/update-stock.component';
 import { StockFeedComponent } from './stock-feed/stock-feed.component';
 import { PrivateStockFeedComponent } from './private-stock-feed/private-stock-feed.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     BsDatepickerModule.forRoot(),
     ApiAuthorizationModule,
     PaginationModule.forRoot(),
+    BsDropdownModule.forRoot(),
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
