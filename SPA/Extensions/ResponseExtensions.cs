@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using SPA.Interfaces;
 
 namespace SPA.Extensions
@@ -23,10 +24,19 @@ namespace SPA.Extensions
         /// </param>
         public static void AddPaginationHeaders(this HttpResponse httpResponse, IPagedProps paginationProps)
         {
-            httpResponse.Headers.Add("Current-Page", paginationProps.CurrentPage.ToString());
-            httpResponse.Headers.Add("Page-Size", paginationProps.PageSize.ToString());
-            httpResponse.Headers.Add("Total-Pages", paginationProps.TotalPages.ToString());
-            httpResponse.Headers.Add("Total-Items", paginationProps.TotalItems.ToString());
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            /*
+             Grouping all the properties from IPagedProps into the single header through JSON
+             As we pass in only the PagedList for example as an IPagedProps then when it is
+             serialized only the properties are written. This grouping prevents cluttering of
+             headers as they are all related and can be deserialized into an object on the client.
+             */
+            httpResponse.Headers.Add("Pagination", JsonSerializer.Serialize(paginationProps, options));
         }
     }
 }

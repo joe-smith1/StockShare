@@ -1,11 +1,39 @@
-<div class="card-deck justify-content-center" *ngIf="stocks.length !== 0">
-  <div class="mt-5" *ngFor="let stock of stocks">
-    <app-stock-card [stock]="stock"></app-stock-card>
+<div class="d-flex mt-1 justify-content-end">
+  <div class="btn-group" style="height: 38px;" dropdown *ngIf="stocks && stockParams">
+    <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+      aria-controls="dropdown-animated">
+      {{stockParams.pageSize}} items per page <span class="caret"></span>
+    </button>
+    <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+      <li role="menuitem"><a class="dropdown-item" (click)="paginationSizeChange(5)">5 items</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="paginationSizeChange(10)">10 items</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="paginationSizeChange(20)">20 items</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="paginationSizeChange(50)">50 items</a></li>
+    </ul>
   </div>
 </div>
 
+
+<div *ngIf="stocks && stocks?.data.length !== 0">
+  <div class="card-deck justify-content-center">
+    <div class="mt-3" *ngFor="let stock of stocks.data">
+      <app-stock-card [stock]="stock"></app-stock-card>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-5" *ngIf="stocks.headers.totalPages > 1">
+
+    <pagination [totalItems]="stocks.headers.totalItems" [itemsPerPage]="stocks.headers.pageSize"
+      [(ngModel)]="stocks.headers.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText=" &rsaquo;">
+    </pagination>
+  </div>
+</div>
+
+
+
 <div class="row justify-content-center">
   <button routerLinkActive [routerLink]="['/add-stock']" routerLinkActive="router-link-active" class="btn btn-primary"
-    *ngIf="stocks.length === 0 && loaded">No Stocks Available Add One :)</button>
+    *ngIf="stocks?.data.length === 0 && loaded">No Stocks Available Add One :)</button>
   <p *ngIf="failed">Failed to get stock feed :(</p>
 </div>
